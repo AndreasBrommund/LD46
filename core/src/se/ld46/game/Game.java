@@ -17,6 +17,7 @@ import se.ld46.game.util.Config;
 import java.util.ArrayList;
 
 import static se.ld46.game.input.GameInputProcessor.gameInputProcessor;
+import static se.ld46.game.util.AssetManagerWrapper.BACKGROUND_TMX;
 import static se.ld46.game.util.AssetManagerWrapper.assetManagerWrapper;
 import static se.ld46.game.util.WorldCamera.worldCamera;
 
@@ -42,7 +43,7 @@ public class Game extends ApplicationAdapter {
                 .build();
 
 
-        TiledMap t = assetManagerWrapper().get("collisionmap/sample_map.tmx");
+        TiledMap t = assetManagerWrapper().get(BACKGROUND_TMX);
         TiledMapTileLayer a = (TiledMapTileLayer) t.getLayers().get(0);
         System.out.println(a.getHeight());
         System.out.println(a.getWidth());
