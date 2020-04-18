@@ -5,12 +5,10 @@ import java.util.Objects;
 public class Location {
     public final int x;
     public final int y;
-    public final Location succesor;
 
-    public Location(int x, int y, Location succesor) {
+    public Location(int x, int y) {
         this.x = x;
         this.y = y;
-        this.succesor = succesor;
     }
 
     @Override
@@ -32,7 +30,6 @@ public class Location {
         return "Location{" +
                 "x=" + x +
                 ", y=" + y +
-                ", succesor=" + succesor +
                 '}';
     }
 }

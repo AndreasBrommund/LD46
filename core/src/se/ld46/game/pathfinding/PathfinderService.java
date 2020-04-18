@@ -4,88 +4,52 @@ import java.util.*;
 
 public class PathfinderService {
 
-    public ArrayList<Pos> find(int[][] map, int startLocationX, int startLocationY, int goalLocationX, int goalLocationY) {
-        ArrayList<Location> result = astar(map, startLocationX, startLocationY, goalLocationX, goalLocationY);
-
-        for (Location location : result) {
-            System.out.println(location);
-        }
-
-        int shortestPath = Integer.MAX_VALUE;
-        Location winner = null;
-        for (Location l : result) {
-            int path = 0;
-            Location currrentSuccesor = l.succesor;
-            while (currrentSuccesor != null) {
-                path++;
-                currrentSuccesor = currrentSuccesor.succesor;
-            }
-
-            if (path < shortestPath) {
-                shortestPath = path;
-                winner = l;
-            }
-
-        }
-
-        System.out.println("Winner: " + winner);
-
-        ArrayList<Pos> winnerResult = new ArrayList<>();
-        winnerResult.add(new Pos(winner));
-        Location currrentSuccesor = winner.succesor;
-        while (currrentSuccesor != null) {
-            winnerResult.add(new Pos(currrentSuccesor));
-            currrentSuccesor = currrentSuccesor.succesor;
-        }
-
-        Collections.reverse(winnerResult);
-        System.out.println(winnerResult);
-        winnerResult.remove(0);
-        return winnerResult;
+    public ArrayList<Location> find(int[][] map, Location start, Location goal) {
+        ArrayList<Location> result = astar(map, start, goal);
+        Collections.reverse(result);
+        return result;
     }
 
-
-    ArrayList<Location> astar(int[][] map, int startX, int startY, int goalX, int goalY) {
+    ArrayList<Location> astar(int[][] map, Location start, Location goal) {
 
         ArrayList<Location> pathsToGoal = new ArrayList<>();
-        HashMap<Location, Integer> openList = new HashMap<>(); //TODO: figure out if this should be a min heap instead.
+        PriorityQueue<Node> openList = new PriorityQueue<>();
         HashSet<Location> closedList = new HashSet<>();
 
         //put starting location in openlist
-        openList.put(new Location(startX, startY, null), 0);
+        openList.add(new Node(start, 0, null));
 
+        boolean foundGoal = false;
 
-        while (!openList.isEmpty()) {
+        while (!openList.isEmpty() && !foundGoal) {
 
-            LocationAndTravelCost locationAndTravelCost = findLocationWithLowestTravelCost(openList);
-            Location currentLocation = locationAndTravelCost.location;
-            int currentTravelCost = locationAndTravelCost.travelCost;
-
-            openList.remove(currentLocation);
+            Node currentNode = openList.poll();
+            Location currentLocation = currentNode.location;
+            int currentTravelCost = currentNode.travelCost;
 
             ArrayList<Location> successors = generateSuccessor(currentLocation);
             for (Location successor : successors) { //process each successor location
 
-                //check if goal then stop!
-                if (hasSuccessorReachedGoal(goalX, goalY, successor)) {
-                    pathsToGoal.add(successor);
+                if (hasSuccessorReachedGoal(goal, successor)) {
+                    pathsToGoal = createPathToGoal(currentNode, successor);
+                    foundGoal = true;
                     break;
                 }
 
-                // If the successor is already on the closed
-                // list or if it is blocked, we skipp
+                // If the successor is blocked or we have already processed it, i.e it is in closedList
                 if (map[successor.y][successor.x] == 0 && !closedList.contains(successor)) {
-                    int successorF = calculateTravelCostToSuccessor(currentTravelCost, successor, new Location(goalX, goalY, null));
-                    if (openList.containsKey(successor)) {
+
+                    int successorTravelCost = calculateTravelCostToSuccessor(currentTravelCost, successor, goal);
+                    if (openList.contains(successor)) {
                         //if the succesor location is in the open list check if this is a path with lower cost.
-                        int potentiallyBetterF = openList.get(successor);
-                        if (potentiallyBetterF < successorF) {
+                        Node existingSuccessorNode = getSuccessorNodeFrom(openList, successor);
+                        if (existingSuccessorNode.travelCost < successorTravelCost) {
                             openList.remove(successor);
-                            openList.put(successor, successorF);
+                            openList.add(new Node(successor, successorTravelCost, existingSuccessorNode.successor));
                         }
                     } else {
                         //add it to the openlist with new successor F value
-                        openList.put(successor, successorF);
+                        openList.add(new Node(successor, successorTravelCost, currentNode));
                     }
                 }
             }
@@ -94,24 +58,32 @@ public class PathfinderService {
         return pathsToGoal;
     }
 
-    private boolean hasSuccessorReachedGoal(int goalX, int goalY, Location successor) {
-        return successor.x == goalX && successor.y == goalY;
+    private ArrayList<Location> createPathToGoal(Node startNode, Location successor) {
+        ArrayList<Location> steps = new ArrayList<>();
+        Node currentNode = startNode;
+        steps.add(successor);
+        while (currentNode != null) {
+            steps.add(currentNode.location);
+            currentNode = currentNode.successor;
+        }
+        return steps;
     }
 
-    //TODO: this could be optimised by using a min heap instead.
-    private LocationAndTravelCost findLocationWithLowestTravelCost(HashMap<Location, Integer> openList) {
-        int travelCost = Integer.MAX_VALUE;
-        Location node = null;
 
-        for (Map.Entry<Location, Integer> locationIntegerEntry : openList.entrySet()) {
-            if (locationIntegerEntry.getValue() < travelCost) {
-                node = locationIntegerEntry.getKey();
-                travelCost = locationIntegerEntry.getValue();
+    private boolean hasSuccessorReachedGoal(Location goal, Location successor) {
+        return successor.x == goal.x && successor.y == goal.y;
+    }
+
+    private Node getSuccessorNodeFrom(PriorityQueue<Node> openlist, Location l) {
+        Iterator<Node> nodes = openlist.iterator();
+        while (nodes.hasNext()) {
+            Node node = nodes.next();
+            if (node.location.equals(l)) {
+                return node;
             }
         }
-        return new LocationAndTravelCost(node, travelCost);
+        return null;
     }
-
 
     //This function basically checks all the potential new locations, one step from the current location and store them in a list
     //In this implementation we can move in all 8 directions and we move with a delta of 1 in each step.
@@ -120,20 +92,20 @@ public class PathfinderService {
 
         //might butcher the up down stuffs but whatever.
         //right
-        Location right = new Location(currentLocation.x + 1, currentLocation.y, currentLocation);
-        Location rightTop = new Location(currentLocation.x + 1, currentLocation.y - 1, currentLocation);
-        Location rightBottom = new Location(currentLocation.x + 1, currentLocation.y + 1, currentLocation);
+        Location right = new Location(currentLocation.x + 1, currentLocation.y);
+        Location rightTop = new Location(currentLocation.x + 1, currentLocation.y - 1);
+        Location rightBottom = new Location(currentLocation.x + 1, currentLocation.y + 1);
 
         //left
-        Location left = new Location(currentLocation.x - 1, currentLocation.y, currentLocation);
-        Location leftTop = new Location(currentLocation.x - 1, currentLocation.y - 1, currentLocation);
-        Location leftBottom = new Location(currentLocation.x - 1, currentLocation.y + 1, currentLocation);
+        Location left = new Location(currentLocation.x - 1, currentLocation.y);
+        Location leftTop = new Location(currentLocation.x - 1, currentLocation.y - 1);
+        Location leftBottom = new Location(currentLocation.x - 1, currentLocation.y + 1);
 
         //up
-        Location up = new Location(currentLocation.x, currentLocation.y + 1, currentLocation);
+        Location up = new Location(currentLocation.x, currentLocation.y + 1);
 
         //down
-        Location down = new Location(currentLocation.x, currentLocation.y - 1, currentLocation);
+        Location down = new Location(currentLocation.x, currentLocation.y - 1);
 
 
         successors.add(up);
