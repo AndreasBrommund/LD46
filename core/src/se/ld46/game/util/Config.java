@@ -7,5 +7,8 @@ public final class Config {
     public final static int WORLD_WIDTH = 20;
     public final static int WORLD_HEIGHT = 15;
 
+    public final static int DEFAULT_VIEWPORT_WIDTH = 10;
+    public final static int DEFAULT_VIEWPORT_HEIGHT = 7;
+
     public final static int TILE_SIZE = 32;
 }

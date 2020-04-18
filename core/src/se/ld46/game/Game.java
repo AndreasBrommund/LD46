@@ -33,9 +33,9 @@ public class Game extends ApplicationAdapter {
         engine.addEntity(orc);
         engine.addEntity(tiledMap);
 
-        engine.addSystem(new MapRenderingSystem(0, WorldCamera.worldCamera()));
-        engine.addSystem(new CollisionMapRendered(1, WorldCamera.worldCamera()));
-        engine.addSystem(new RenderSystem(WorldCamera.worldCamera(), 2));
+        engine.addSystem(new MapRenderingSystem(0, worldCamera()));
+        engine.addSystem(new CollisionMapRendered(1, worldCamera()));
+        engine.addSystem(new RenderSystem(worldCamera(), 2));
 
         engine.addSystem(new ClickToMoveSystem());
         engine.addSystem(new PathfindingSystem());

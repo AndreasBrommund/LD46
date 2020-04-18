@@ -2,17 +2,17 @@ package se.ld46.game.util;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
+import static se.ld46.game.util.Config.DEFAULT_VIEWPORT_HEIGHT;
+import static se.ld46.game.util.Config.DEFAULT_VIEWPORT_WIDTH;
 
 public final class WorldCamera {
     private static WorldCamera worldCamera = null;
 
     public final OrthographicCamera camera;
 
-    public static int VIEWPORT_WIDTH = 10;
-    public static int VIEWPORT_HEIGHT = 7;
 
     private WorldCamera() {
-        camera = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+        camera = new OrthographicCamera(DEFAULT_VIEWPORT_WIDTH, DEFAULT_VIEWPORT_HEIGHT);
         camera.setToOrtho(false, camera.viewportWidth, camera.viewportHeight);
         camera.update();
     }

@@ -3,11 +3,12 @@ package se.ld46.game.systems;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import se.ld46.game.Config;
-import se.ld46.game.WorldCamera;
 import se.ld46.game.collisionmap.CollisionMap;
+import se.ld46.game.util.Config;
+import se.ld46.game.util.WorldCamera;
 
 public class CollisionMapRendered extends EntitySystem {
 
@@ -15,18 +16,18 @@ public class CollisionMapRendered extends EntitySystem {
 
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
     private SpriteBatch spriteBatch = new SpriteBatch();
-    private WorldCamera camera;
+    private OrthographicCamera camera;
 
-    public CollisionMapRendered(int priority, WorldCamera camera) {
+    public CollisionMapRendered(int priority, WorldCamera worldCamera) {
         super(priority);
-        this.camera = camera;
+        this.camera = worldCamera.camera;
 
     }
 
     @Override
     public void update(float deltaTime) {
         Gdx.app.log("DEBUG", "Is this running?");
-        shapeRenderer.setProjectionMatrix(camera.value.combined);
+        shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.RED);
 
