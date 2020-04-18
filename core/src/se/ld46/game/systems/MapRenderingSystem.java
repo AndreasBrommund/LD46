@@ -10,7 +10,6 @@ import se.ld46.game.components.TiledMapWrapper;
 import static se.ld46.game.Config.TILE_SIZE;
 
 public class MapRenderingSystem extends EntitySystem {
-
     private ComponentMapper<TiledMapWrapper> tiledMapComponentMapper = ComponentMapper.getFor(TiledMapWrapper.class);
     private WorldCamera worldCamera;
 
