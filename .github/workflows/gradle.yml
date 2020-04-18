@@ -23,14 +23,14 @@ jobs:
         run: ./gradlew html:dist
       - uses: actions/upload-artifact@v1
         with:
-          name: Package
+          name: HTML
           path: html/build/dist
       - name: Build Desktop
         run: ./gradlew desktop:dist
       - uses: actions/upload-artifact@v1
         with:
-          name: Package
-          path: desktop/build/lib
+          name: Desktop
+          path: desktop/build/libs
       - name: Upload with FTP
         uses: sebastianpopp/ftp-action@releases/v2
         with:
