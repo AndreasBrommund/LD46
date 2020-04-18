@@ -3,6 +3,7 @@ package se.ld46.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import se.ld46.game.input.TouchDownSubscriber;
 import se.ld46.game.pathfinding.Location;
 import se.ld46.game.pathfinding.PathfinderService;
@@ -24,26 +25,26 @@ public class Orc implements TouchDownSubscriber {
     private boolean move = false;
     private boolean timeForNextStep = false;
     private float timeSeconds = 0f;
-    private float period = 1f;
+    private float period = 300f;
 
 
     private ArrayList<Location> pathToMoveAlong = new ArrayList<>();
 
     int[][] map = new int[][]{
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+            {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+            {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1},
+            {1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+            {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+            {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+            {1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+            {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+            {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1},
+            {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+            {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
     };
 
@@ -57,11 +58,11 @@ public class Orc implements TouchDownSubscriber {
 
     @Override
     public void onTouchDown(int screenX, int screenY, int pointer, int button) {
-        System.out.println("Someone clicked on the screen!");
-
-
-        moveX = screenX / 32;
-        moveY = 15 - (screenY / 32);
+        Gdx.app.log("Debug", "Orc noticed click");
+        Gdx.app.log("debug", "SCREEN: " + screenX + " : " + screenY);
+        Gdx.app.log("debug", "SCREEN to world:" + WorldCamera.worldCamera().value.unproject(new Vector3(screenX, screenY, 0)));
+        moveX = 18;
+        moveY = 12;
 
         calculateMove = true;
     }
@@ -84,25 +85,12 @@ public class Orc implements TouchDownSubscriber {
         }
 
         if (move) {
-
-            //Execute handleEvent each 1 second
-            timeSeconds += Gdx.graphics.getRawDeltaTime();
-            if (timeSeconds > period) {
-                timeSeconds = 0;
-                timeForNextStep = true;
-                Gdx.app.log("DEBUG", "TIME TO STEP");
-
-            }
-
-
-            if (timeForNextStep) {
-                Location nextLocation = pathToMoveAlong.get(step);
-                x = nextLocation.x;
-                y = nextLocation.y;
-                Gdx.app.log("DEBUG", "UPDATED POS");
-                timeForNextStep = false;
-                step++;
-            }
+            Location nextLocation = pathToMoveAlong.get(step);
+            x = nextLocation.x;
+            y = nextLocation.y;
+            Gdx.app.log("DEBUG", "UPDATED POS");
+            timeForNextStep = false;
+            step++;
 
 
             if (step == pathToMoveAlong.size()) {
