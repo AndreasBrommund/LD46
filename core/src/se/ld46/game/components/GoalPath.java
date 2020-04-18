@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class GoalPath implements Component {
     public ArrayList<Location> pathToGoal;
+    public int step;
 
     public GoalPath(ArrayList<Location> pathToGoal) {
         this.pathToGoal = pathToGoal;

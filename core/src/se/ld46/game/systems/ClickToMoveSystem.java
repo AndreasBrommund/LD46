@@ -42,7 +42,8 @@ public class ClickToMoveSystem extends EntitySystem implements TouchDownSubscrib
         entities.forEach(e -> {
                     Position p = pm.get(e);
                     Location start = new Location(p.x, p.y);
-                    e.add(new Pathfinding(start, goal));
+                    Gdx.app.log("DEBUG", "Add pathfinding to player" + e.getComponents());
+            e.add(new Pathfinding(start, goal));
                 }
         );
     }

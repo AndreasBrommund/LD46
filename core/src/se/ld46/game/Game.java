@@ -7,9 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import se.ld46.game.components.*;
 import se.ld46.game.input.GameInputProcessor;
-import se.ld46.game.systems.ClickToMoveSystem;
-import se.ld46.game.systems.MapRenderingSystem;
-import se.ld46.game.systems.RenderSystem;
+import se.ld46.game.systems.*;
 
 import static se.ld46.game.AssetManagerWrapper.assetManagerWrapper;
 import static se.ld46.game.input.GameInputProcessor.gameInputProcessor;
@@ -37,6 +35,8 @@ public class Game extends ApplicationAdapter {
         engine.addSystem(new MapRenderingSystem(Integer.MIN_VALUE, WorldCamera.worldCamera()));
         engine.addSystem(new RenderSystem(WorldCamera.worldCamera()));
         engine.addSystem(new ClickToMoveSystem());
+        engine.addSystem(new PathfindingSystem());
+        engine.addSystem(new MoveToGoalSystem(0.2f));
 
         inputProcessor = gameInputProcessor();
         Gdx.input.setInputProcessor(inputProcessor);
