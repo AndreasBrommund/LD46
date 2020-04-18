@@ -19,10 +19,14 @@ public class PathfinderService {
 
         ArrayList<Location> pathsToGoal = new ArrayList<>();
         PriorityQueue<Node> openList = new PriorityQueue<>();
+        boolean[][] openListContains = new boolean[Config.WORLD_HEIGHT][Config.WORLD_WIDTH];
+        int[][] travelCosts = new int[Config.WORLD_HEIGHT][Config.WORLD_WIDTH];
         boolean[][] closedList = new boolean[Config.WORLD_HEIGHT][Config.WORLD_WIDTH];
 
         //put starting location in openlist
         openList.add(new Node(start, 0, null));
+        openListContains[start.y][start.x] = true;
+        travelCosts[start.y][start.x] = 0;
 
         boolean foundGoal = false;
 
@@ -44,16 +48,18 @@ public class PathfinderService {
                 // If the successor is blocked or we have already processed it, i.e it is in closedList
                 if (map[successor.y][successor.x] == 0 && !closedList[successor.y][successor.x]) {
                     int successorTravelCost = calculateTravelCostToSuccessor(currentTravelCost, successor, goal);
-                    if (openList.contains(successor)) {
+                    if (openListContains[successor.y][successor.x]) {
                         //if the succesor location is in the open list check if this is a path with lower cost.
-                        Node existingSuccessorNode = getSuccessorNodeFrom(openList, successor);
-                        if (existingSuccessorNode.travelCost < successorTravelCost) {
-                            openList.remove(successor);
-                            openList.add(new Node(successor, successorTravelCost, existingSuccessorNode.successor));
+                        int existingSuccessorTravelCost = travelCosts[successor.y][successor.x];
+                        if (existingSuccessorTravelCost < successorTravelCost) {
+                            openList.add(new Node(successor, successorTravelCost, currentNode));
+                            travelCosts[successor.y][successor.x] = successorTravelCost;
                         }
                     } else {
                         //add it to the openlist with new successor F value
                         openList.add(new Node(successor, successorTravelCost, currentNode));
+                        openListContains[successor.y][successor.x] = true;
+                        travelCosts[successor.y][successor.x] = successorTravelCost;
                     }
                 }
             }
