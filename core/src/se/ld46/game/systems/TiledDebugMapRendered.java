@@ -8,6 +8,7 @@ import se.ld46.game.util.Config;
 import se.ld46.game.util.WorldCamera;
 
 public class TiledDebugMapRendered extends EntitySystem {
+
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
     private OrthographicCamera camera;
 

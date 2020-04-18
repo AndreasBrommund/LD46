@@ -30,7 +30,9 @@ public class PathfindingSystem extends IteratingSystem {
         Pathfinding p = pfm.get(entity);
         Gdx.app.log("DEBUG", "Pathfinding system");
         ArrayList<Location> pathToGoal = pathfinderService.find(collisionMap, p.start, p.goal);
-        entity.add(new GoalPath(pathToGoal));
+        if (pathToGoal.size() != 0) {
+            entity.add(new GoalPath(pathToGoal));
+        }
         entity.remove(Pathfinding.class);
     }
 }

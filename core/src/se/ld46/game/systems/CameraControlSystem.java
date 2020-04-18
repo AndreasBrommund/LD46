@@ -16,7 +16,7 @@ import static se.ld46.game.util.Config.WORLD_WIDTH;
 
 public class CameraControlSystem extends EntitySystem implements KeyDownSubscriber {
 
-    public static final int tilesToMove = 5;
+    public static final int tilesToMove = 2;
     public static final float zoomRate = 0.05f;
 
     private OrthographicCamera camera;
@@ -32,6 +32,8 @@ public class CameraControlSystem extends EntitySystem implements KeyDownSubscrib
     public void update(final float deltaTime) {
         super.update(deltaTime);
         handleInput();
+
+
         camera.update();
     }
 

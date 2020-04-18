@@ -12,8 +12,8 @@ public final class AssetManagerWrapper {
 
     private final AssetManager assetManager;
 
-    public final static String BACKGROUND_TMX = "collisionmap/sample_map.tmx";
-    public final static String ORC_PNG = "orc.png";
+    public final static String BACKGROUND_TMX = "collisionmap/map.tmx";
+    public final static String ORC_PNG = "orc2.png";
 
     private AssetManagerWrapper() {
         assetManager = new AssetManager();

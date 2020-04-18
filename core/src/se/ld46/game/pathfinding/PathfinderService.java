@@ -92,14 +92,9 @@ public class PathfinderService {
         //might butcher the up down stuffs but whatever.
         //right
         Location right = new Location(currentLocation.x + 1, currentLocation.y);
-        Location rightTop = new Location(currentLocation.x + 1, currentLocation.y - 1);
-        Location rightBottom = new Location(currentLocation.x + 1, currentLocation.y + 1);
 
         //left
         Location left = new Location(currentLocation.x - 1, currentLocation.y);
-        Location leftTop = new Location(currentLocation.x - 1, currentLocation.y - 1);
-        Location leftBottom = new Location(currentLocation.x - 1, currentLocation.y + 1);
-
         //up
         Location up = new Location(currentLocation.x, currentLocation.y + 1);
 
@@ -110,11 +105,7 @@ public class PathfinderService {
         successors.add(up);
         successors.add(down);
         successors.add(left);
-        successors.add(leftBottom);
-        successors.add(leftTop);
         successors.add(right);
-        successors.add(rightBottom);
-        successors.add(rightTop);
 
         successors = successors.stream().filter(l -> 0 <= l.x && l.x < Config.WORLD_WIDTH && 0 <= l.y && l.y < Config.WORLD_HEIGHT).collect(Collectors.toCollection(ArrayList::new));
 

@@ -28,19 +28,23 @@ public class Game extends ApplicationAdapter {
     @Override
     public void create() {
 
+
+        CollisionMapRendered entitySystem = new CollisionMapRendered(1, worldCamera());
+        TiledDebugMapRendered entitySystem1 = new TiledDebugMapRendered(3, worldCamera());
         engine = EngineBuilder
                 .engineBuilder()
-                .withEntity(OrcFactory.create(1, 1, 1, 1))
+                .withEntity(OrcFactory.create(48, 50, 1, 1))
                 .withEntity(TiledMapFactory.create())
                 .withEntitySystem(new MapRenderingSystem(0, worldCamera()))
-                .withEntitySystem(new CollisionMapRendered(1, worldCamera()))
+                .withEntitySystem(entitySystem)
                 .withEntitySystem(new RenderSystem(worldCamera(), 2))
                 .withEntitySystem(new CameraControlSystem(4, worldCamera()))
                 .withEntitySystem(new HungerSystem(5, 2)) //2 seconds
                 .withEntitySystem(new ClickToMoveSystem())
                 .withEntitySystem(new PathfindingSystem())
                 .withEntitySystem(new MoveToGoalSystem(0.2f))
-                .withEntitySystem(new TiledDebugMapRendered(3, worldCamera()))
+                .withEntitySystem(entitySystem1)
+                .withEntitySystem(new UtilSystem(entitySystem, entitySystem1))
                 .build();
 
 
