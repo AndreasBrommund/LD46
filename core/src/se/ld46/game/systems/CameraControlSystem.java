@@ -13,6 +13,7 @@ import java.util.HashMap;
 
 public class CameraControlSystem extends EntitySystem implements KeyDownSubscriber {
 
+    public static final int tilestomove = 5;
     private OrthographicCamera camera;
     private HashMap<Integer, Boolean> keyDown = new HashMap<>();
 
@@ -47,19 +48,19 @@ public class CameraControlSystem extends EntitySystem implements KeyDownSubscrib
             keyDown.put(Input.Keys.W, false);
         }
         if (keyDown.getOrDefault(Input.Keys.LEFT, false)) {
-            camera.translate(-1, 0, 0);
+            camera.translate(-tilestomove, 0, 0);
             keyDown.put(Input.Keys.LEFT, false);
         }
         if (keyDown.getOrDefault(Input.Keys.RIGHT, false)) {
-            camera.translate(1, 0, 0);
+            camera.translate(tilestomove, 0, 0);
             keyDown.put(Input.Keys.RIGHT, false);
         }
         if (keyDown.getOrDefault(Input.Keys.DOWN, false)) {
-            camera.translate(0, -1, 0);
+            camera.translate(0, -tilestomove, 0);
             keyDown.put(Input.Keys.DOWN, false);
         }
         if (keyDown.getOrDefault(Input.Keys.UP, false)) {
-            camera.translate(0, 1, 0);
+            camera.translate(0, tilestomove, 0);
             keyDown.put(Input.Keys.UP, false);
         }
 

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.PriorityQueue;
+import java.util.stream.Collectors;
 
 public class PathfinderService {
 
@@ -126,6 +127,8 @@ public class PathfinderService {
         successors.add(right);
         successors.add(rightBottom);
         successors.add(rightTop);
+
+        successors = successors.stream().filter(l -> 0 <= l.x && l.x < Config.WORLD_WIDTH && 0 <= l.y && l.y < Config.WORLD_HEIGHT).collect(Collectors.toCollection(ArrayList::new));
 
 
         return successors;
