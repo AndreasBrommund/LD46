@@ -1,4 +1,4 @@
-package se.ld46.game;
+package se.ld46.game.util;
 
 public final class Config {
     public final static int SCREEN_WIDTH = 1280;

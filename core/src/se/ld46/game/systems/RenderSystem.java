@@ -6,10 +6,10 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import se.ld46.game.WorldCamera;
 import se.ld46.game.components.Position;
 import se.ld46.game.components.Size;
 import se.ld46.game.components.Visual;
+import se.ld46.game.util.WorldCamera;
 
 public class RenderSystem extends IteratingSystem {
 
@@ -17,21 +17,19 @@ public class RenderSystem extends IteratingSystem {
     private ComponentMapper<Size> sizeMapper = ComponentMapper.getFor(Size.class);
     private ComponentMapper<Visual> visualMapper = ComponentMapper.getFor(Visual.class);
 
-
-    private SpriteBatch batch;
     private OrthographicCamera camera;
 
-    public RenderSystem(WorldCamera camera, int priority) {
+    private SpriteBatch batch;
+
+    public RenderSystem(WorldCamera worldCamera, int priority) {
         super(Family.all(Visual.class, Position.class, Size.class).get(), priority);
-        this.camera = camera.value;
         this.batch = new SpriteBatch();
+        camera = worldCamera.camera;
     }
 
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-
-        camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 

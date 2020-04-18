@@ -6,28 +6,29 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import se.ld46.game.components.*;
-import se.ld46.game.input.GameInputProcessor;
 import se.ld46.game.systems.*;
 
-import static se.ld46.game.AssetManagerWrapper.assetManagerWrapper;
 import static se.ld46.game.input.GameInputProcessor.gameInputProcessor;
+import static se.ld46.game.util.AssetManagerWrapper.*;
+import static se.ld46.game.util.WorldCamera.worldCamera;
+
 
 public class Game extends ApplicationAdapter {
-    private GameInputProcessor inputProcessor;
     private Engine engine;
 
     @Override
     public void create() {
+
         engine = new Engine();
         Entity orc = new Entity();
 
         orc.add(new Position(1, 1));
         orc.add(new Size(1, 1));
-        orc.add(new Visual(assetManagerWrapper().get("orc.png")));
+        orc.add(new Visual(assetManagerWrapper().get(ORC_PNG)));
         orc.add(new SelectedForMovement());
 
         Entity tiledMap = new Entity();
-        tiledMap.add(new TiledMapWrapper(assetManagerWrapper().get("background.tmx")));
+        tiledMap.add(new TiledMapWrapper(assetManagerWrapper().get(BACKGROUND_TMX)));
 
         engine.addEntity(orc);
         engine.addEntity(tiledMap);
@@ -39,9 +40,9 @@ public class Game extends ApplicationAdapter {
         engine.addSystem(new ClickToMoveSystem());
         engine.addSystem(new PathfindingSystem());
         engine.addSystem(new MoveToGoalSystem(0.2f));
+        engine.addSystem(new CameraControlSystem(Integer.MIN_VALUE, worldCamera())); // TODO: [A.B.]
 
-        inputProcessor = gameInputProcessor();
-        Gdx.input.setInputProcessor(inputProcessor);
+        Gdx.input.setInputProcessor(gameInputProcessor());
     }
 
     @Override
@@ -50,4 +51,5 @@ public class Game extends ApplicationAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         engine.update(Gdx.graphics.getDeltaTime());
     }
+
 }

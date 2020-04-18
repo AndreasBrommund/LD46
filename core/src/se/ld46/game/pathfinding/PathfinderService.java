@@ -1,6 +1,6 @@
 package se.ld46.game.pathfinding;
 
-import se.ld46.game.Config;
+import se.ld46.game.util.Config;
 
 import java.util.ArrayList;
 import java.util.Collections;
