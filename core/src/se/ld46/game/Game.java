@@ -2,40 +2,34 @@ package se.ld46.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import se.ld46.game.input.GameInputProcessor;
 
-import static se.ld46.game.AssetManagerBuilder.assetManagerBuilder;
+import static se.ld46.game.AssetManagerWrapper.assetManagerWrapper;
+import static se.ld46.game.MapRenderer.mapRenderer;
 import static se.ld46.game.WorldCamera.worldCamera;
+import static se.ld46.game.input.GameInputProcessor.gameInputProcessor;
 
 public class Game extends ApplicationAdapter {
     private SpriteBatch batch;
-    private AssetManager assetManager;
+    private AssetManagerWrapper assetManagerWrapper;
     private WorldCamera worldCamera;
     private MapRenderer mapRenderer;
-    private Orc orc;
+    private GameInputProcessor inputProcessor;
 
-    public static final GameInputProcessor INPUT_PROCESSOR = new GameInputProcessor();
+    private Orc orc;
 
 
     @Override
     public void create() {
+        inputProcessor = gameInputProcessor();
+        worldCamera = worldCamera();
+        mapRenderer = mapRenderer();
+        assetManagerWrapper = assetManagerWrapper();
 
         batch = new SpriteBatch();
         orc = new Orc();
-
-        worldCamera = worldCamera();
-        assetManager = assetManagerBuilder()
-                .withAsset(TiledMap.class, "background.tmx")
-                .build();
-
-        mapRenderer = MapRenderer.mapRenderer(assetManager, worldCamera);
-
-        Gdx.input.setInputProcessor(INPUT_PROCESSOR);
     }
 
     @Override
@@ -49,19 +43,16 @@ public class Game extends ApplicationAdapter {
         batch.setProjectionMatrix(worldCamera.value.combined);
 
         batch.begin();
-        orc.update(batch);
+        orc.render(batch);
         batch.end();
-
-
     }
 
     @Override
     public void dispose() {
         batch.dispose();
         orc.dispose();
-        assetManager.dispose();
+        assetManagerWrapper.dispose();
         mapRenderer.dispose();
-        worldCamera.dispose();
     }
 
     @Override

@@ -5,13 +5,14 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 
-import static se.ld46.game.Config.VIEWPORT_HEIGHT;
-import static se.ld46.game.Config.VIEWPORT_WIDTH;
 
-public final class WorldCamera implements Updatable, Disposable {
+public final class WorldCamera implements Updatable {
     private static WorldCamera worldCamera = null;
 
     public final OrthographicCamera value;
+
+    public static int VIEWPORT_WIDTH = 10;
+    public static int VIEWPORT_HEIGHT = 7;
 
     private WorldCamera() {
         value = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
@@ -19,11 +20,10 @@ public final class WorldCamera implements Updatable, Disposable {
         value.update();
     }
 
-    public static WorldCamera worldCamera()
-    {
-        if (worldCamera == null)
+    public static WorldCamera worldCamera() {
+        if (worldCamera == null) {
             worldCamera = new WorldCamera();
-
+        }
         return worldCamera;
     }
 
@@ -33,11 +33,8 @@ public final class WorldCamera implements Updatable, Disposable {
         value.update();
     }
 
-    @Override
-    public void dispose() {
-    }
-
     private void handleInput() {
+
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             value.zoom += 0.02;
         }

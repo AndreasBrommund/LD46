@@ -10,12 +10,14 @@ import se.ld46.game.pathfinding.PathfinderService;
 
 import java.util.ArrayList;
 
-public class Orc implements TouchDownSubscriber {
+import static se.ld46.game.AssetManagerWrapper.assetManagerWrapper;
+import static se.ld46.game.input.GameInputProcessor.gameInputProcessor;
+
+public class Orc implements TouchDownSubscriber, Disposable, Renderable {
 
     private int x;
     private int y;
 
-    private final Texture orcImage;
     private final PathfinderService pathfinderService = new PathfinderService();
     private int step;
 
@@ -50,8 +52,7 @@ public class Orc implements TouchDownSubscriber {
 
 
     public Orc() {
-        orcImage = new Texture("orc.png");
-        Game.INPUT_PROCESSOR.add(this);
+        gameInputProcessor().add(this);
         x = 1;
         y = 1;
     }
@@ -68,21 +69,22 @@ public class Orc implements TouchDownSubscriber {
     }
 
 
-    void update(SpriteBatch batch) {
+    @Override
+    public void render(SpriteBatch batch) {
 
-        if (calculateMove) {
-
-            Location start = new Location(x, y);
-            Location goal = new Location(moveX, moveY);
-
-            Gdx.app.log("DEBUG", "will find path");
-            Gdx.app.log("DEBUG", "GOAL IS: " + goal);
-            pathToMoveAlong = pathfinderService.find(map, start, goal);
-            Gdx.app.log("DEBUG", "Path found");
-            calculateMove = false;
-            move = true;
-
-        }
+//        if (calculateMove) {
+//
+//            Location start = new Location(x, y);
+//            Location goal = new Location(moveX, moveY);
+//
+//            Gdx.app.log("DEBUG", "will find path");
+//            Gdx.app.log("DEBUG", "GOAL IS: " + goal);
+//            pathToMoveAlong = pathfinderService.find(map, start, goal);
+//            Gdx.app.log("DEBUG", "Path found");
+//            calculateMove = false;
+//            move = true;
+//
+//        }
 
         if (move) {
             Location nextLocation = pathToMoveAlong.get(step);
@@ -101,10 +103,11 @@ public class Orc implements TouchDownSubscriber {
         }
 
 
-        batch.draw(orcImage, x, y, 1, 1);
+        batch.draw((Texture) assetManagerWrapper().get("orc.png"), x, y, 1, 1);
     }
 
-    void dispose() {
-        orcImage.dispose();
+    @Override
+    public void dispose() {
+
     }
 }

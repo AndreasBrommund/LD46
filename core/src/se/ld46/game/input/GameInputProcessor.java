@@ -5,15 +5,32 @@ import com.badlogic.gdx.InputProcessor;
 import java.util.ArrayList;
 
 public class GameInputProcessor implements InputProcessor {
+    private static GameInputProcessor gameInputProcessor = null;
 
     private final ArrayList<TouchDownSubscriber> touchDownSubscribers = new ArrayList<>();
+    private final ArrayList<KeyDownSubscriber> keyDownSubscribers = new ArrayList<>();
 
     public void add(TouchDownSubscriber subscriber) {
         touchDownSubscribers.add(subscriber);
     }
 
+    public void add(KeyDownSubscriber subscriber) {
+        keyDownSubscribers.add(subscriber);
+    }
+
+    private GameInputProcessor() {
+    }
+
+    public static GameInputProcessor gameInputProcessor() {
+        if (gameInputProcessor == null) {
+            gameInputProcessor = new GameInputProcessor();
+        }
+        return gameInputProcessor;
+    }
+
     @Override
     public boolean keyDown(int keycode) {
+        keyDownSubscribers.forEach(subscriber -> subscriber.onKeyDown(keycode));
         return false;
     }
 
@@ -29,9 +46,7 @@ public class GameInputProcessor implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        for (TouchDownSubscriber subscriber : touchDownSubscribers) {
-            subscriber.onTouchDown(screenX, screenY, pointer, button);
-        }
+        touchDownSubscribers.forEach(subscriber -> subscriber.onTouchDown(screenX, screenY, pointer, button));
         return false;
     }
 
