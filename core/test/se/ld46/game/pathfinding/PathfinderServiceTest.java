@@ -121,8 +121,10 @@ class PathfinderServiceTest {
         Location start = new Location(1, 1);
 
         PathfinderService pathfinderService = new PathfinderService();
+        long startTime = System.currentTimeMillis();
         ArrayList<Location> steps = pathfinderService.find(map, start, goal);
-
+        long totalTime = System.currentTimeMillis() - startTime;
+        System.out.println("Total time: " + totalTime + " ms");
     }
 
 

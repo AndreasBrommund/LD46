@@ -1,6 +1,11 @@
 package se.ld46.game.pathfinding;
 
-import java.util.*;
+import se.ld46.game.Config;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.PriorityQueue;
 
 public class PathfinderService {
 
@@ -14,7 +19,7 @@ public class PathfinderService {
 
         ArrayList<Location> pathsToGoal = new ArrayList<>();
         PriorityQueue<Node> openList = new PriorityQueue<>();
-        HashSet<Location> closedList = new HashSet<>();
+        boolean[][] closedList = new boolean[Config.WORLD_HEIGHT][Config.WORLD_WIDTH];
 
         //put starting location in openlist
         openList.add(new Node(start, 0, null));
@@ -26,8 +31,6 @@ public class PathfinderService {
             Node currentNode = openList.poll();
             Location currentLocation = currentNode.location;
             int currentTravelCost = currentNode.travelCost;
-            //Gdx.app.log("DEBUG", "Search from location: " + currentLocation);
-
 
             ArrayList<Location> successors = generateSuccessor(currentLocation);
             for (Location successor : successors) { //process each successor location
@@ -39,8 +42,7 @@ public class PathfinderService {
                 }
 
                 // If the successor is blocked or we have already processed it, i.e it is in closedList
-                if (map[successor.y][successor.x] == 0 && !closedList.contains(successor)) {
-
+                if (map[successor.y][successor.x] == 0 && !closedList[successor.y][successor.x]) {
                     int successorTravelCost = calculateTravelCostToSuccessor(currentTravelCost, successor, goal);
                     if (openList.contains(successor)) {
                         //if the succesor location is in the open list check if this is a path with lower cost.
@@ -55,7 +57,7 @@ public class PathfinderService {
                     }
                 }
             }
-            closedList.add(currentLocation);
+            closedList[currentLocation.y][currentLocation.x] = true;
         }
         return pathsToGoal;
     }
