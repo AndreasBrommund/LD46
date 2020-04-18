@@ -4,14 +4,10 @@ import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import se.ld46.game.collisionmap.CollisionMap;
 import se.ld46.game.util.Config;
 import se.ld46.game.util.WorldCamera;
 
 public class TiledDebugMapRendered extends EntitySystem {
-
-    int[][] map = CollisionMap.data;
-
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
     private OrthographicCamera camera;
 

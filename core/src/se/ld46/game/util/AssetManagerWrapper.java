@@ -1,4 +1,4 @@
-package se.ld46.game;
+package se.ld46.game.util;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.TextureLoader;

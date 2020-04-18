@@ -6,8 +6,9 @@ import se.ld46.game.components.SelectedForMovement;
 import se.ld46.game.components.Size;
 import se.ld46.game.components.Visual;
 
-import static se.ld46.game.AssetManagerWrapper.ORC_PNG;
-import static se.ld46.game.AssetManagerWrapper.assetManagerWrapper;
+import static se.ld46.game.util.AssetManagerWrapper.ORC_PNG;
+import static se.ld46.game.util.AssetManagerWrapper.assetManagerWrapper;
+
 
 public class OrcFactory {
     public static Entity create(int x, int y, int with, int height) {

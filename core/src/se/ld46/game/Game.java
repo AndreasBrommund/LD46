@@ -16,8 +16,8 @@ import se.ld46.game.util.Config;
 
 import java.util.ArrayList;
 
-import static se.ld46.game.AssetManagerWrapper.assetManagerWrapper;
 import static se.ld46.game.input.GameInputProcessor.gameInputProcessor;
+import static se.ld46.game.util.AssetManagerWrapper.assetManagerWrapper;
 import static se.ld46.game.util.WorldCamera.worldCamera;
 
 

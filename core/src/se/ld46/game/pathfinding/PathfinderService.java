@@ -4,7 +4,6 @@ import se.ld46.game.util.Config;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.PriorityQueue;
 import java.util.stream.Collectors;
 
@@ -83,17 +82,6 @@ public class PathfinderService {
 
     private boolean hasSuccessorReachedGoal(Location goal, Location successor) {
         return successor.x == goal.x && successor.y == goal.y;
-    }
-
-    private Node getSuccessorNodeFrom(PriorityQueue<Node> openlist, Location l) {
-        Iterator<Node> nodes = openlist.iterator();
-        while (nodes.hasNext()) {
-            Node node = nodes.next();
-            if (node.location.equals(l)) {
-                return node;
-            }
-        }
-        return null;
     }
 
     //This function basically checks all the potential new locations, one step from the current location and store them in a list
