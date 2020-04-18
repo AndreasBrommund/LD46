@@ -26,7 +26,7 @@ jobs:
           name: Package
           path: html/build/dist
       - name: Build Desktop
-          run: ./gradlew desktop:dist
+        run: ./gradlew desktop:dist
       - uses: actions/upload-artifact@v1
           with:
             name: Package
