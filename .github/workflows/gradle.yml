@@ -28,9 +28,9 @@ jobs:
       - name: Build Desktop
         run: ./gradlew desktop:dist
       - uses: actions/upload-artifact@v1
-          with:
-            name: Package
-            path: desktop/build/lib
+        with:
+          name: Package
+          path: desktop/build/lib
       - name: Upload with FTP
         uses: sebastianpopp/ftp-action@releases/v2
         with:
