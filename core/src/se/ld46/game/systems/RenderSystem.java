@@ -21,8 +21,8 @@ public class RenderSystem extends IteratingSystem {
     private SpriteBatch batch;
     private OrthographicCamera camera;
 
-    public RenderSystem(WorldCamera camera) {
-        super(Family.all(Visual.class, Position.class, Size.class).get());
+    public RenderSystem(WorldCamera camera, int priority) {
+        super(Family.all(Visual.class, Position.class, Size.class).get(), priority);
         this.camera = camera.value;
         this.batch = new SpriteBatch();
     }

@@ -21,7 +21,7 @@ public class Game extends ApplicationAdapter {
         engine = new Engine();
         Entity orc = new Entity();
 
-        orc.add(new Position(5, 5));
+        orc.add(new Position(1, 1));
         orc.add(new Size(1, 1));
         orc.add(new Visual(assetManagerWrapper().get("orc.png")));
         orc.add(new SelectedForMovement());
@@ -32,8 +32,10 @@ public class Game extends ApplicationAdapter {
         engine.addEntity(orc);
         engine.addEntity(tiledMap);
 
-        engine.addSystem(new MapRenderingSystem(Integer.MIN_VALUE, WorldCamera.worldCamera()));
-        engine.addSystem(new RenderSystem(WorldCamera.worldCamera()));
+        engine.addSystem(new MapRenderingSystem(0, WorldCamera.worldCamera()));
+        engine.addSystem(new CollisionMapRendered(1, WorldCamera.worldCamera()));
+        engine.addSystem(new RenderSystem(WorldCamera.worldCamera(), 2));
+
         engine.addSystem(new ClickToMoveSystem());
         engine.addSystem(new PathfindingSystem());
         engine.addSystem(new MoveToGoalSystem(0.2f));
