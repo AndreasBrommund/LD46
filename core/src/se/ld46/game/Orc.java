@@ -119,7 +119,7 @@ public class Orc implements TouchDownSubscriber, Disposable, Renderable {
         }
 
 
-        batch.draw((Texture) assetManagerWrapper().get("orc.png"), x, y, 1, 1);
+        batch.draw(assetManagerWrapper().<Texture>get("orc.png"), x, y, 1, 1);
     }
 
     @Override
