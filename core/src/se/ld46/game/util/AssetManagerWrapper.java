@@ -1,4 +1,4 @@
-package se.ld46.game.util;
+package se.ld46.game;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.TextureLoader;
@@ -12,12 +12,13 @@ public final class AssetManagerWrapper {
 
     private final AssetManager assetManager;
 
-    public final static String BACKGROUND_TMX = "background.tmx";
+    public final static String BACKGROUND_TMX = "collisionmap/sample_map.tmx";
     public final static String ORC_PNG = "orc.png";
 
     private AssetManagerWrapper() {
         assetManager = new AssetManager();
 
+        //Add assets
         //TmxMaps
         assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
         assetManager.load(BACKGROUND_TMX, TiledMap.class);

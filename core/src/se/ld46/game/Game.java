@@ -5,11 +5,14 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import se.ld46.game.components.*;
 import se.ld46.game.systems.*;
+import se.ld46.game.util.Config;
 
+import static se.ld46.game.AssetManagerWrapper.*;
 import static se.ld46.game.input.GameInputProcessor.gameInputProcessor;
-import static se.ld46.game.util.AssetManagerWrapper.*;
 import static se.ld46.game.util.WorldCamera.worldCamera;
 
 
@@ -29,6 +32,13 @@ public class Game extends ApplicationAdapter {
 
         Entity tiledMap = new Entity();
         tiledMap.add(new TiledMapWrapper(assetManagerWrapper().get(BACKGROUND_TMX)));
+
+
+        TiledMap t = assetManagerWrapper().get("collisionmap/sample_map.tmx");
+        t.getLayers().get("Collisions").getObjects().getByType(TiledMapTileMapObject.class).forEach(r -> {
+            System.out.println(r.getName() + " X:" + r.getX() / Config.WORLD_WIDTH + " Y:" + r.getY() / Config.WORLD_HEIGHT);
+        });
+
 
         engine.addEntity(orc);
         engine.addEntity(tiledMap);
