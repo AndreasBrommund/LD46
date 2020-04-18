@@ -6,7 +6,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 import static se.ld46.game.Config.TILE_SIZE;
 
-public final class MapRenderer implements  Playable{
+public final class MapRenderer implements Updatable, Disposable {
     private static MapRenderer mapRenderer = null;
     private WorldCamera worldCamera;
 

@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import static se.ld46.game.Config.VIEWPORT_HEIGHT;
 import static se.ld46.game.Config.VIEWPORT_WIDTH;
 
-public final class WorldCamera implements  Playable{
+public final class WorldCamera implements Updatable, Disposable {
     private static WorldCamera worldCamera = null;
 
     public final OrthographicCamera value;
