@@ -36,7 +36,7 @@ jobs:
         with:
           host: 'ftp.brommund.se'
           user: 'brommund.se'
-          password: ${{ secrets.FPT_PASSWORD }}
+          password: ${{ secrets.FTP_PASSWORD }}
           localDir: 'html/build/dist'
           remoteDir: '.'
           forceSsl: 'false'
