@@ -5,11 +5,9 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import se.ld46.game.components.Position;
-import se.ld46.game.components.Size;
-import se.ld46.game.components.TiledMapWrapper;
-import se.ld46.game.components.Visual;
+import se.ld46.game.components.*;
 import se.ld46.game.input.GameInputProcessor;
+import se.ld46.game.systems.ClickToMoveSystem;
 import se.ld46.game.systems.MapRenderingSystem;
 import se.ld46.game.systems.RenderSystem;
 
@@ -28,6 +26,7 @@ public class Game extends ApplicationAdapter {
         orc.add(new Position(5, 5));
         orc.add(new Size(1, 1));
         orc.add(new Visual(assetManagerWrapper().get("orc.png")));
+        orc.add(new SelectedForMovement());
 
         Entity tiledMap = new Entity();
         tiledMap.add(new TiledMapWrapper(assetManagerWrapper().get("background.tmx")));
@@ -37,6 +36,7 @@ public class Game extends ApplicationAdapter {
 
         engine.addSystem(new MapRenderingSystem(Integer.MIN_VALUE, WorldCamera.worldCamera()));
         engine.addSystem(new RenderSystem(WorldCamera.worldCamera()));
+        engine.addSystem(new ClickToMoveSystem());
 
         inputProcessor = gameInputProcessor();
         Gdx.input.setInputProcessor(inputProcessor);
