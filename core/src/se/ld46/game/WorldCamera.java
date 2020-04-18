@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 
 
-public final class WorldCamera implements Updatable {
+public final class WorldCamera implements Updateable {
     private static WorldCamera worldCamera = null;
 
     public final OrthographicCamera value;

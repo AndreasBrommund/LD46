@@ -1,5 +1,5 @@
 package se.ld46.game;
 
-public interface Updatable {
+public interface Updateable {
     void render();
 }

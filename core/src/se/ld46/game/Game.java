@@ -19,15 +19,16 @@ public class Game extends ApplicationAdapter {
     private GameInputProcessor inputProcessor;
 
     private Orc orc;
-
+    private CollisionMap collisionMap;
 
     @Override
     public void create() {
         inputProcessor = gameInputProcessor();
+        Gdx.input.setInputProcessor(inputProcessor);
         worldCamera = worldCamera();
         mapRenderer = mapRenderer();
         assetManagerWrapper = assetManagerWrapper();
-
+        collisionMap = new CollisionMap();
         batch = new SpriteBatch();
         orc = new Orc();
     }
@@ -44,6 +45,7 @@ public class Game extends ApplicationAdapter {
 
         batch.begin();
         orc.render(batch);
+        collisionMap.render(batch);
         batch.end();
     }
 

@@ -7,7 +7,7 @@ import static se.ld46.game.AssetManagerWrapper.assetManagerWrapper;
 import static se.ld46.game.Config.TILE_SIZE;
 import static se.ld46.game.WorldCamera.worldCamera;
 
-public final class MapRenderer implements Updatable, Disposable {
+public final class MapRenderer implements Updateable, Disposable {
     private static MapRenderer mapRenderer = null;
     private WorldCamera worldCamera;
 

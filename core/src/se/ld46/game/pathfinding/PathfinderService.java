@@ -45,7 +45,7 @@ public class PathfinderService {
                     break;
                 }
 
-                // If the successor is blocked or we have already processed it, i.e it is in closedList
+                // If the successor is not blocked or we have not already processed it, i.e it is in closedList
                 if (map[successor.y][successor.x] == 0 && !closedList[successor.y][successor.x]) {
                     int successorTravelCost = calculateTravelCostToSuccessor(currentTravelCost, successor, goal);
                     if (openListContains[successor.y][successor.x]) {
