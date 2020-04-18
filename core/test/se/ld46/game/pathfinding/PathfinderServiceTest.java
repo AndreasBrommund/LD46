@@ -33,12 +33,13 @@ class PathfinderServiceTest {
         PathfinderService pathfinderService = new PathfinderService();
         ArrayList<Location> steps = pathfinderService.find(map, new Location(startLocationX, startLocationY), new Location(goalLocationX, goalLocationY));
 
-        assertEquals(5, steps.size());
+        assertEquals(6, steps.size());
         assertEquals(new Location(1, 1), steps.get(0));
         assertEquals(new Location(1, 2), steps.get(1));
         assertEquals(new Location(1, 3), steps.get(2));
-        assertEquals(new Location(2, 4), steps.get(3));
-        assertEquals(new Location(3, 4), steps.get(4));
+        assertEquals(new Location(1, 4), steps.get(3));
+        assertEquals(new Location(2, 4), steps.get(4));
+        assertEquals(new Location(3, 4), steps.get(5));
     }
 
 
@@ -93,7 +94,7 @@ class PathfinderServiceTest {
         PathfinderService pathfinderService = new PathfinderService();
         ArrayList<Location> steps = pathfinderService.find(map, new Location(startLocationX, startLocationY), new Location(goalLocationX, goalLocationY));
 
-        assertEquals(10, steps.size());
+        assertEquals(12, steps.size());
     }
 
 
