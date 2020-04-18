@@ -1,7 +1,6 @@
 package se.ld46.game;
 
 import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -10,13 +9,14 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.math.Vector2;
 import se.ld46.game.collisionmap.CollisionMap;
-import se.ld46.game.components.*;
+import se.ld46.game.entityfactories.OrcFactory;
+import se.ld46.game.entityfactories.TiledMapFactory;
 import se.ld46.game.systems.*;
 import se.ld46.game.util.Config;
 
 import java.util.ArrayList;
 
-import static se.ld46.game.AssetManagerWrapper.*;
+import static se.ld46.game.AssetManagerWrapper.assetManagerWrapper;
 import static se.ld46.game.input.GameInputProcessor.gameInputProcessor;
 import static se.ld46.game.util.WorldCamera.worldCamera;
 
@@ -27,16 +27,19 @@ public class Game extends ApplicationAdapter {
     @Override
     public void create() {
 
-        engine = new Engine();
-        Entity orc = new Entity();
-
-        orc.add(new Position(1, 1));
-        orc.add(new Size(1, 1));
-        orc.add(new Visual(assetManagerWrapper().get(ORC_PNG)));
-        orc.add(new SelectedForMovement());
-
-        Entity tiledMap = new Entity();
-        tiledMap.add(new TiledMapWrapper(assetManagerWrapper().get(BACKGROUND_TMX)));
+        engine = EngineBuilder
+                .engineBuilder()
+                .withEntity(OrcFactory.create(1, 1, 1, 1))
+                .withEntity(TiledMapFactory.create())
+                .withEntitySystem(new MapRenderingSystem(0, worldCamera()))
+                .withEntitySystem(new CollisionMapRendered(1, worldCamera()))
+                .withEntitySystem(new RenderSystem(worldCamera(), 2))
+                .withEntitySystem(new CameraControlSystem(4, worldCamera()))
+                .withEntitySystem(new ClickToMoveSystem())
+                .withEntitySystem(new PathfindingSystem())
+                .withEntitySystem(new MoveToGoalSystem(0.2f))
+                .withEntitySystem(new TiledDebugMapRendered(3, worldCamera()))
+                .build();
 
 
         TiledMap t = assetManagerWrapper().get("collisionmap/sample_map.tmx");
@@ -55,18 +58,6 @@ public class Game extends ApplicationAdapter {
         CollisionMap.createCollisionMap(blockedPositions);
 
 
-        engine.addEntity(orc);
-        engine.addEntity(tiledMap);
-
-        engine.addSystem(new MapRenderingSystem(0, worldCamera()));
-        engine.addSystem(new CollisionMapRendered(1, worldCamera()));
-        engine.addSystem(new RenderSystem(worldCamera(), 2));
-        engine.addSystem(new TiledDebugMapRendered(3, worldCamera()));
-
-        engine.addSystem(new ClickToMoveSystem());
-        engine.addSystem(new PathfindingSystem());
-        engine.addSystem(new MoveToGoalSystem(0.2f));
-        engine.addSystem(new CameraControlSystem(Integer.MIN_VALUE, worldCamera())); // TODO: [A.B.]
 
         Gdx.input.setInputProcessor(gameInputProcessor());
     }

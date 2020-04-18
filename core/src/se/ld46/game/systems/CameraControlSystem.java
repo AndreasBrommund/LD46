@@ -11,6 +11,9 @@ import se.ld46.game.util.WorldCamera;
 
 import java.util.HashMap;
 
+import static se.ld46.game.util.Config.WORLD_HEIGHT;
+import static se.ld46.game.util.Config.WORLD_WIDTH;
+
 public class CameraControlSystem extends EntitySystem implements KeyDownSubscriber {
 
     public static final int tilestomove = 5;
@@ -69,8 +72,8 @@ public class CameraControlSystem extends EntitySystem implements KeyDownSubscrib
         float effectiveViewportWidth = camera.viewportWidth * camera.zoom;
         float effectiveViewportHeight = camera.viewportHeight * camera.zoom;
 
-        camera.position.x = MathUtils.clamp(camera.position.x, effectiveViewportWidth / 2f, 100 - effectiveViewportWidth / 2f);
-        camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewportHeight / 2f, 100 - effectiveViewportHeight / 2f);
+        camera.position.x = MathUtils.clamp(camera.position.x, effectiveViewportWidth / 2f, WORLD_WIDTH - effectiveViewportWidth / 2f);
+        camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewportHeight / 2f, WORLD_HEIGHT - effectiveViewportHeight / 2f);
     }
 
 }
