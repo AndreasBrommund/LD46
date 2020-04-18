@@ -36,6 +36,7 @@ public class Game extends ApplicationAdapter {
                 .withEntitySystem(new CollisionMapRendered(1, worldCamera()))
                 .withEntitySystem(new RenderSystem(worldCamera(), 2))
                 .withEntitySystem(new CameraControlSystem(4, worldCamera()))
+                .withEntitySystem(new HungerSystem(5, 2)) //2 seconds
                 .withEntitySystem(new ClickToMoveSystem())
                 .withEntitySystem(new PathfindingSystem())
                 .withEntitySystem(new MoveToGoalSystem(0.2f))
