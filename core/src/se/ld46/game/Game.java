@@ -14,10 +14,11 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import se.ld46.game.input.GameInputProcessor;
 
 public class Game extends ApplicationAdapter {
     SpriteBatch batch;
-    Texture orcImage;
+    private Orc orc;
     Texture backgroundImage;
     OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     AssetManager assetManager;
@@ -35,13 +36,16 @@ public class Game extends ApplicationAdapter {
 
     private float rotationSpeed = 0.5f;
 
+    public static final GameInputProcessor INPUT_PROCESSOR = new GameInputProcessor();
+
+
     @Override
     public void create() {
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
 
         batch = new SpriteBatch();
-        orcImage = new Texture("orc.png");
+        orc = new Orc();
         backgroundImage = new Texture("background.png");
 
 
@@ -60,21 +64,11 @@ public class Game extends ApplicationAdapter {
         float unitScale = 1 / 32f;
         TiledMap map = assetManager.get("background.tmx");
         orthogonalTiledMapRenderer = new OrthogonalTiledMapRenderer(map, unitScale);
+        Gdx.input.setInputProcessor(INPUT_PROCESSOR);
     }
 
     @Override
     public void render() {
-
-        if (orcX + 32 > 640 || orcX < 0) {
-            dx = dx * -1;
-        }
-
-
-        System.out.println(orcX);
-
-
-        orcX += speed * dx;
-
         handleInput();
 
         Gdx.gl.glClearColor(0,0,0,1);
@@ -89,11 +83,12 @@ public class Game extends ApplicationAdapter {
 
         batch.begin();
 
+
+        orc.update(batch);
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 0, 0);
 
-        batch.draw(orcImage, 0, 0, 1, 1);
-        batch.end();
 
+        batch.end();
 
 
     }
@@ -101,7 +96,7 @@ public class Game extends ApplicationAdapter {
     @Override
     public void dispose() {
         batch.dispose();
-        orcImage.dispose();
+        orc.dispose();
     }
 
     @Override

@@ -26,6 +26,8 @@ public class PathfinderService {
             Node currentNode = openList.poll();
             Location currentLocation = currentNode.location;
             int currentTravelCost = currentNode.travelCost;
+            //Gdx.app.log("DEBUG", "Search from location: " + currentLocation);
+
 
             ArrayList<Location> successors = generateSuccessor(currentLocation);
             for (Location successor : successors) { //process each successor location
