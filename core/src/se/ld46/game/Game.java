@@ -75,6 +75,7 @@ public class Game extends ApplicationAdapter {
                 .withEntitySystem(new TakeingSystem(20))
                 .withEntitySystem(new MoveToInventorySystem(21))
                 .withEntitySystem(new RemovingSystem(Integer.MAX_VALUE))
+                .withEntitySystem(new NightRenderingSystem())
                 .build();
 
 
