@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.math.Vector2;
 import se.ld46.game.collisionmap.CollisionMap;
+import se.ld46.game.entityfactories.*;
 import se.ld46.game.components.Hunger;
 import se.ld46.game.entityfactories.ItemFactory;
 import se.ld46.game.entityfactories.MousePointerFactory;
@@ -43,6 +44,7 @@ public class Game extends ApplicationAdapter {
                         assetManagerWrapper().get(ITEM_WOOD),
                         assetManagerWrapper().get(ITEM_WOOD_TAKEN)))
                 .withEntity(MousePointerFactory.create(47, 50))
+                .withEntity(FireFactory.create(50, 50, 1, 1, assetManagerWrapper().get(NO_FIRE)))
                 .withEntity(TiledMapFactory.create())
                 .withEntitySystem(new MapRenderingSystem(0, worldCamera()))
                 .withEntitySystem(collisionMapRendered)
@@ -60,6 +62,7 @@ public class Game extends ApplicationAdapter {
                 .withEntitySystem(new ActionDecisionSystem())
                 .withEntitySystem(new MoveToInventorySystem())
                 .withEntitySystem(new HealthSystem(0))
+                .withEntitySystem(new FireSystem(1))
                 .build();
 
 
