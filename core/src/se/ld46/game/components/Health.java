@@ -17,6 +17,6 @@ public class Health implements Component {
     }
 
     public String print() {
-        return current + "/" + max;
+        return "Health: " + current + "/" + max;
     }
 }

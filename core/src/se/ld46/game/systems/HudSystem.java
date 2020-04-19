@@ -31,12 +31,13 @@ public class HudSystem extends IteratingSystem {
     private Stage stage;
 
     private final static int PADDING = 10;
-    private final static int SIZE = 50;
+    private final static int SIZE = 100;
     private final static LabelStyle labelStyle = new LabelStyle(new BitmapFont(), Color.WHITE);
 
     public HudSystem(int priority) {
         super(Family.all(Health.class, Hunger.class, Inventory.class).get(), priority);
         stage = new Stage();
+
     }
 
 
@@ -64,7 +65,7 @@ public class HudSystem extends IteratingSystem {
         }
 
         items.forEach(item -> {
-            final Image image = new Image(item.name());
+            final Image image = new Image(item.texture());
             table.add(image);
             table.row();
         });

@@ -2,7 +2,10 @@ package se.ld46.game.components;
 
 import com.badlogic.ashley.core.Component;
 
+
 public class Hunger implements Component {
+    public final static int INCREASE_RATE = 30; //Seconds
+
     public int current;
     public int max;
 
@@ -17,6 +20,6 @@ public class Hunger implements Component {
     }
 
     public String print() {
-        return current + "/" + max;
+        return "Hunger: " + current + "/" + max;
     }
 }

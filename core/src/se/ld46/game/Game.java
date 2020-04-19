@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.math.Vector2;
 import se.ld46.game.collisionmap.CollisionMap;
+import se.ld46.game.components.Hunger;
 import se.ld46.game.entityfactories.ItemFactory;
 import se.ld46.game.entityfactories.MousePointerFactory;
 import se.ld46.game.entityfactories.OrcFactory;
@@ -35,14 +36,19 @@ public class Game extends ApplicationAdapter {
         engine = EngineBuilder
                 .engineBuilder()
                 .withEntity(OrcFactory.create(48, 50, 2, 2))
-                .withEntity(ItemFactory.create(40, 50, 1, 1, assetManagerWrapper().get(ITEM_WOOD), assetManagerWrapper().get(ITEM_WOOD_TAKEN)))
+                .withEntity(ItemFactory.create(40,
+                        50,
+                        1,
+                        1,
+                        assetManagerWrapper().get(ITEM_WOOD),
+                        assetManagerWrapper().get(ITEM_WOOD_TAKEN)))
                 .withEntity(MousePointerFactory.create(47, 50))
                 .withEntity(TiledMapFactory.create())
                 .withEntitySystem(new MapRenderingSystem(0, worldCamera()))
                 .withEntitySystem(collisionMapRendered)
                 .withEntitySystem(new RenderSystem(worldCamera(), 2))
                 .withEntitySystem(new CameraControlSystem(4, worldCamera()))
-                .withEntitySystem(new HungerSystem(10, 2))
+                .withEntitySystem(new HungerSystem(Hunger.INCREASE_RATE, 2))
                 .withEntitySystem(new ClickToMoveSystem())
                 .withEntitySystem(new PathfindingSystem())
                 .withEntitySystem(new MoveToGoalSystem(0.2f))
@@ -53,6 +59,7 @@ public class Game extends ApplicationAdapter {
                 .withEntitySystem(new MousePointerSystem(10))
                 .withEntitySystem(new ActionDecisionSystem())
                 .withEntitySystem(new MoveToInventorySystem())
+                .withEntitySystem(new HealthSystem(0))
                 .build();
 
 
