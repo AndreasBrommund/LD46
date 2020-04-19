@@ -40,8 +40,8 @@ public class RenderSystem extends IteratingSystem {
 
         batch.draw(
                 visual.texture,
-                position.x,
-                position.y,
+                position.x - size.width / size.offset,
+                position.y - size.width / size.offset,
                 size.width,
                 size.height);
         batch.end();

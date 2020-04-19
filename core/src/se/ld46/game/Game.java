@@ -33,7 +33,7 @@ public class Game extends ApplicationAdapter {
         TiledDebugMapRendered entitySystem1 = new TiledDebugMapRendered(3, worldCamera());
         engine = EngineBuilder
                 .engineBuilder()
-                .withEntity(OrcFactory.create(48, 50, 1, 1))
+                .withEntity(OrcFactory.create(48, 50, 2, 2))
                 .withEntity(TiledMapFactory.create())
                 .withEntitySystem(new MapRenderingSystem(0, worldCamera()))
                 .withEntitySystem(entitySystem)

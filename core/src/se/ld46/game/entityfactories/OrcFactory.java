@@ -12,7 +12,7 @@ public class OrcFactory {
         Entity orc = new Entity();
 
         orc.add(new Position(x, y));
-        orc.add(new Size(with, height));
+        orc.add(new Size(with, height, 4f));
         orc.add(new Visual(assetManagerWrapper().get(ORC_PNG)));
         orc.add(new SelectedForMovement());
         orc.add(new Health(5));
