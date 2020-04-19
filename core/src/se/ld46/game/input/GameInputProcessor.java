@@ -51,7 +51,11 @@ public class GameInputProcessor implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        touchDownSubscribers.forEach(subscriber -> subscriber.onTouchDown(screenX, screenY, pointer, button));
+        for (TouchDownSubscriber touchDownSubscriber : touchDownSubscribers) {
+            if (touchDownSubscriber.onTouchDown(screenX, screenY, pointer, button)) {
+                break;
+            }
+        }
         return false;
     }
 

@@ -20,6 +20,7 @@ public class ClickToMoveSystem extends EntitySystem implements TouchDownSubscrib
     private ImmutableArray<Entity> entities;
 
     public ClickToMoveSystem() {
+
         GameInputProcessor.gameInputProcessor().add(this);
     }
 
@@ -29,21 +30,18 @@ public class ClickToMoveSystem extends EntitySystem implements TouchDownSubscrib
     }
 
     @Override
-    public void onTouchDown(int screenX, int screenY, int pointer, int button) {
-        if (button == Input.Buttons.RIGHT) {
-            Gdx.app.log("Debug", "Orc noticed click");
+    public boolean onTouchDown(int screenX, int screenY, int pointer, int button) {
+        if (button == Input.Buttons.LEFT) {
+            Gdx.app.log("CLICK TO MOVE", "TRIGGER");
             Vector3 unproject = WorldCamera.worldCamera().camera.unproject(new Vector3(screenX, screenY, 0));
-            Gdx.app.log("debug", "SCREEN to world:" + unproject);
-
             int moveX = (int) Math.floor(unproject.x);
             int moveY = (int) Math.floor(unproject.y);
-
             Location goal = new Location(moveX, moveY);
-
             if (CollisionMap.data[goal.y][goal.x] == 0) {
                 addPathfindingComponent(goal);
             }
         }
+        return false;
     }
 
     private void addPathfindingComponent(Location goal) {

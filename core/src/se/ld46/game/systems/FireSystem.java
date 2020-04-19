@@ -7,21 +7,16 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IntervalIteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector3;
 import se.ld46.game.Item;
 import se.ld46.game.components.*;
-import se.ld46.game.input.GameInputProcessor;
-import se.ld46.game.input.TouchDownSubscriber;
-import se.ld46.game.util.WorldCamera;
 
 import java.util.Arrays;
 
 import static com.badlogic.ashley.core.ComponentMapper.getFor;
 import static se.ld46.game.util.AssetManagerWrapper.*;
 
-public class FireSystem extends IntervalIteratingSystem implements TouchDownSubscriber {
+public class FireSystem extends IntervalIteratingSystem {
 
     private ComponentMapper<Fire> firemap = getFor(Fire.class);
     private ComponentMapper<Visual> vm = getFor(Visual.class);
@@ -32,7 +27,7 @@ public class FireSystem extends IntervalIteratingSystem implements TouchDownSubs
 
     public FireSystem(float interval) {
         super(Family.all(Fire.class).get(), interval);
-        GameInputProcessor.gameInputProcessor().add(this);
+//        GameInputProcessor.gameInputProcessor().add(this);
     }
 
     ImmutableArray<Entity> fires;
@@ -46,30 +41,32 @@ public class FireSystem extends IntervalIteratingSystem implements TouchDownSubs
 
     }
 
-    @Override
-    public void onTouchDown(int screenX, int screenY, int pointer, int button) {
-        if (Input.Buttons.LEFT == button) {
-            Vector3 unproject = WorldCamera.worldCamera().camera.unproject(new Vector3(screenX, screenY, 0));
-            int x = (int) Math.ceil(unproject.x);
-            int y = (int) Math.ceil(unproject.y);
-            clickOnItem(x, y);
-        }
-    }
-
-    private void clickOnItem(int x, int y) {
-        for (Entity entity : fires) {
-            Position p = pm.get(entity);
-            if (p.x == x && p.y == y) {
-                clickOnFire(entity);
-            }
-        }
-    }
+//    @Override
+//    public void onTouchDown(int screenX, int screenY, int pointer, int button) {
+//        if (Input.Buttons.LEFT == button) {
+//            Vector3 unproject = WorldCamera.worldCamera().camera.unproject(new Vector3(screenX, screenY, 0));
+//            int x = (int) Math.ceil(unproject.x);
+//            int y = (int) Math.ceil(unproject.y);
+//            clickOnItem(x, y);
+//        }
+//    }
+//
+//    private void clickOnItem(int x, int y) {
+//        for (Entity entity : fires) {
+//            Position p = pm.get(entity);
+//            if (p.x == x && p.y == y) {
+//                Position playerPos = pm.get(player.first());
+//                Vector2 pp = new Vector2(p.x, p.y);
+//                Vector2 playerVec = new Vector2(playerPos.x, playerPos.y);
+//                if (playerVec.dst(pp) < 2) {
+//                    clickOnFire(entity);
+//                }
+//            }
+//        }
+//    }
 
     private void clickOnFire(Entity entity) {
         Inventory inventory = inventoryComponentMapper.get(player.first());//TODO: there can only be one player
-        for (Item item : inventory.items) {
-            Gdx.app.log("INV", item.type().name());
-        }
         if (Arrays.stream(inventory.items).anyMatch(i -> i.type() == ItemType.WOOD)) {
             Fire f = firemap.get(entity);
             f.fuel += 10;
@@ -90,7 +87,7 @@ public class FireSystem extends IntervalIteratingSystem implements TouchDownSubs
                 }
             }
         } else {
-            Gdx.app.log("NO WOORD", "Missing wood");
+            Gdx.app.log("DEBUG", "Missing wood");
         }
     }
 

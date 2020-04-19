@@ -11,7 +11,7 @@ public class ItemFactory {
         item.add(new Position(x, y));
         item.add(new Size(with, height, 1f));
         item.add(new Visual(texture));
-        item.add(new ClickableItem());
+        item.add(new ClickableItem(ClickType.PICKUP));
         item.add(new PickableItem(textureInventory, type));
         return item;
     }

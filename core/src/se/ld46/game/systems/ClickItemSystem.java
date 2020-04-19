@@ -4,22 +4,25 @@ import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import se.ld46.game.components.ActionDecision;
+import se.ld46.game.components.ActionOrMoveToPosition;
 import se.ld46.game.components.ClickableItem;
-import se.ld46.game.components.ClickedItem;
 import se.ld46.game.components.Position;
 import se.ld46.game.input.GameInputProcessor;
 import se.ld46.game.input.TouchDownSubscriber;
 import se.ld46.game.util.WorldCamera;
 
+import static com.badlogic.ashley.core.ComponentMapper.getFor;
+
 public class ClickItemSystem extends EntitySystem implements TouchDownSubscriber {
 
-    private ComponentMapper<Position> pm = ComponentMapper.getFor(Position.class);
+    private ComponentMapper<Position> pm = getFor(Position.class);
+    private ComponentMapper<ClickableItem> clickableItemComponentMapper = getFor(ClickableItem.class);
     ImmutableArray<Entity> entities;
 
     public ClickItemSystem() {
+
+
         GameInputProcessor.gameInputProcessor().add(this);
     }
 
@@ -30,23 +33,32 @@ public class ClickItemSystem extends EntitySystem implements TouchDownSubscriber
     }
 
     @Override
-    public void onTouchDown(int screenX, int screenY, int pointer, int button) {
+    public boolean onTouchDown(int screenX, int screenY, int pointer, int button) {
         if (Input.Buttons.LEFT == button) {
+            Gdx.app.log("CLICK ITEM", "TRIGGER");
             Vector3 unproject = WorldCamera.worldCamera().camera.unproject(new Vector3(screenX, screenY, 0));
-            Gdx.app.log("debug", "Click screen to world:" + unproject);
             int x = (int) Math.ceil(unproject.x);
             int y = (int) Math.ceil(unproject.y);
-            clickOnItem(x, y);
+            return clickOnItem(x, y);
         }
+        return false;
     }
 
-    private void clickOnItem(int x, int y) {
+    private boolean clickOnItem(int x, int y) {
         for (Entity entity : entities) {
             Position p = pm.get(entity);
             if (p.x == x && p.y == y) {
-                entity.add(new ClickedItem());
-                entity.add(new ActionDecision(new Vector2(p.x, p.y)));
+                decideOnAction(entity, p);
+                return true;
             }
         }
+        return false;
     }
+
+    private void decideOnAction(Entity entity, Position p) {
+        ClickableItem clickableItem = clickableItemComponentMapper.get(entity);
+        entity.add(new ActionOrMoveToPosition(clickableItem.clickType, p));
+    }
+
+
 }

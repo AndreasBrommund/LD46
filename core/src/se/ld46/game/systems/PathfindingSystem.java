@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.Gdx;
 import se.ld46.game.collisionmap.CollisionMap;
 import se.ld46.game.components.GoalPath;
 import se.ld46.game.components.Pathfinding;
@@ -28,7 +27,6 @@ public class PathfindingSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         Pathfinding p = pfm.get(entity);
-        Gdx.app.log("DEBUG", "Pathfinding system");
         ArrayList<Location> pathToGoal = pathfinderService.find(collisionMap, p.start, p.goal);
         if (pathToGoal.size() != 0) {
             entity.add(new GoalPath(pathToGoal));

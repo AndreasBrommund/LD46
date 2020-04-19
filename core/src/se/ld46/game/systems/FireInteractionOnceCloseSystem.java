@@ -7,20 +7,20 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Vector2;
+import se.ld46.game.components.FireInteract;
+import se.ld46.game.components.FireInteractionOnceClose;
 import se.ld46.game.components.Position;
 import se.ld46.game.components.SelectedForMovement;
-import se.ld46.game.components.TakeOnceClose;
-import se.ld46.game.components.Takeing;
 
-public class TakeOnceCloseSystem extends IteratingSystem {
+public class FireInteractionOnceCloseSystem extends IteratingSystem {
+
 
     private ComponentMapper<Position> pm = ComponentMapper.getFor(Position.class);
-
     ImmutableArray<Entity> movementEntities;
 
 
-    public TakeOnceCloseSystem() {
-        super(Family.all(TakeOnceClose.class, Position.class).get());
+    public FireInteractionOnceCloseSystem(int p) {
+        super(Family.all(FireInteractionOnceClose.class, Position.class).get(), p);
     }
 
     @Override
@@ -37,8 +37,8 @@ public class TakeOnceCloseSystem extends IteratingSystem {
         Vector2 itemVec = new Vector2(itemToPickup.x, itemToPickup.y);
         float dst = playerVec.dst(itemVec);
         if (dst < 0.5f) {
-            entity.add(new Takeing());
-            entity.remove(TakeOnceClose.class);
+            movementEntities.first().add(new FireInteract());
+            entity.remove(FireInteractionOnceClose.class);
         }
     }
 }
