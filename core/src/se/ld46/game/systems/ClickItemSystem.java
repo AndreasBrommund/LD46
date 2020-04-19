@@ -4,8 +4,11 @@ import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import se.ld46.game.components.ActionDecision;
 import se.ld46.game.components.ClickableItem;
+import se.ld46.game.components.ClickedItem;
 import se.ld46.game.components.Position;
 import se.ld46.game.input.GameInputProcessor;
 import se.ld46.game.input.TouchDownSubscriber;
@@ -42,7 +45,8 @@ public class ClickItemSystem extends EntitySystem implements TouchDownSubscriber
         for (Entity entity : entities) {
             Position p = pm.get(entity);
             if (p.x == x && p.y == y) {
-                Gdx.app.log("DEBUG", "Clicked entity" + entity);
+                entity.add(new ClickedItem());
+                entity.add(new ActionDecision(new Vector2(p.x, p.y)));
             }
         }
     }

@@ -51,6 +51,7 @@ public class Game extends ApplicationAdapter {
                 .withEntitySystem(new UtilSystem(entitySystem, entitySystem1))
                 .withEntitySystem(new ClickItemSystem())
                 .withEntitySystem(new MousePointerSystem(10))
+                .withEntitySystem(new ActionDecisionSystem())
                 .build();
 
 
