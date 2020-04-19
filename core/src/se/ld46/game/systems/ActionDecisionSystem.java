@@ -53,6 +53,7 @@ public class ActionDecisionSystem extends EntitySystem {
                     Location start = new Location(playerPos.x, playerPos.y);
                     Location goal = new Location((int) ad.clicked.x, (int) ad.clicked.y);
                     movementEntities.first().add(new Pathfinding(start, goal));
+                    e.add(new TakeOnceClose());
                 }
 
                 e.remove(ActionDecision.class);

@@ -32,8 +32,8 @@ public class Game extends ApplicationAdapter {
         TiledDebugMapRendered tiledDebugMapRendered = new TiledDebugMapRendered(3, worldCamera());
         engine = EngineBuilder
                 .engineBuilder()
-                .withEntity(OrcFactory.create(48, 50, 2, 2))
-                .withEntity(ItemFactory.create(40,
+                .withEntity(OrcFactory.create(55, 50, 2, 2))
+                .withEntity(ItemFactory.create(46,
                         50,
                         1,
                         1,
@@ -56,7 +56,7 @@ public class Game extends ApplicationAdapter {
                 .withEntitySystem(new ClickItemSystem())
                 .withEntitySystem(new MousePointerSystem(10))
                 .withEntitySystem(new ActionDecisionSystem())
-
+                .withEntitySystem(new TakeOnceCloseSystem())
                 .withEntitySystem(new HealthSystem(0))
                 .withEntitySystem(new FireSystem(1))
                 .withEntitySystem(new TakeingSystem(20))
@@ -67,8 +67,6 @@ public class Game extends ApplicationAdapter {
 
         TiledMap t = assetManagerWrapper().get(BACKGROUND_TMX);
         TiledMapTileLayer a = (TiledMapTileLayer) t.getLayers().get(0);
-        System.out.println(a.getHeight());
-        System.out.println(a.getWidth());
 
 
         ArrayList<Vector2> blockedPositions = new ArrayList<>();

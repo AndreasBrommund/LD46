@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IntervalIteratingSystem;
-import com.badlogic.gdx.Gdx;
 import se.ld46.game.components.GoalPath;
 import se.ld46.game.components.Position;
 import se.ld46.game.pathfinding.Location;
@@ -22,7 +21,6 @@ public class MoveToGoalSystem extends IntervalIteratingSystem {
 
     @Override
     protected void processEntity(Entity entity) {
-        Gdx.app.log("DEBUG", " I am moving to the goal!");
         GoalPath g = goalPathComponentMapper.get(entity);
         if (g.step == g.pathToGoal.size()) {
             entity.remove(GoalPath.class);

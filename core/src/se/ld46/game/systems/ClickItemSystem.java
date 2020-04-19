@@ -32,7 +32,6 @@ public class ClickItemSystem extends EntitySystem implements TouchDownSubscriber
     @Override
     public void onTouchDown(int screenX, int screenY, int pointer, int button) {
         if (Input.Buttons.LEFT == button) {
-            System.out.println("Check for click on item");
             Vector3 unproject = WorldCamera.worldCamera().camera.unproject(new Vector3(screenX, screenY, 0));
             Gdx.app.log("debug", "Click screen to world:" + unproject);
             int x = (int) Math.ceil(unproject.x);
