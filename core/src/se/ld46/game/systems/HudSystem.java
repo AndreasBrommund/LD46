@@ -7,6 +7,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -63,9 +64,8 @@ public class HudSystem extends IteratingSystem {
         }
 
         items.forEach(item -> {
-            final Label label = new Label(item.name(), labelStyle);
-            label.setAlignment(Align.center);
-            table.add(label).width(SIZE).height(SIZE);
+            final Image image = new Image(item.name());
+            table.add(image);
             table.row();
         });
 

@@ -37,7 +37,7 @@ public class MousePointerSystem extends IteratingSystem implements MouseMoveSubs
         super(Family.all(MousePointer.class).get(), prio);
         GameInputProcessor.gameInputProcessor().add(this);
         batch = new SpriteBatch();
-        screen = new Rectangle(0, 0, Config.SCREEN_WIDTH, Config.SCREEN_WIDTH);
+        screen = new Rectangle(0, 0, Config.SCREEN_WIDTH, Config.SCREEN_WIDTH); // TODO: [A.B.] W and W ???
     }
 
     @Override

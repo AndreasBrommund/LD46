@@ -17,6 +17,8 @@ public final class AssetManagerWrapper {
     public final static String POINT_PNG = "point.png";
     public static final String CLICK_PNG = "click.png";
     public static final String ITEM_WOOD = "item.png";
+    public static final String EMPTY = "empty.png";
+    public static final String ITEM_WOOD_TAKEN = "item_wood_taken.png";
 
 
     private AssetManagerWrapper() {
@@ -34,6 +36,10 @@ public final class AssetManagerWrapper {
         assetManager.load(POINT_PNG, Texture.class);
         assetManager.load(CLICK_PNG, Texture.class);
         assetManager.load(ITEM_WOOD, Texture.class);
+        assetManager.load(ITEM_WOOD_TAKEN, Texture.class);
+
+        assetManager.load(EMPTY, Texture.class);
+
 
         assetManager.finishLoading();
     }

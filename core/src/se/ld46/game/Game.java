@@ -19,8 +19,7 @@ import se.ld46.game.util.Config;
 import java.util.ArrayList;
 
 import static se.ld46.game.input.GameInputProcessor.gameInputProcessor;
-import static se.ld46.game.util.AssetManagerWrapper.BACKGROUND_TMX;
-import static se.ld46.game.util.AssetManagerWrapper.assetManagerWrapper;
+import static se.ld46.game.util.AssetManagerWrapper.*;
 import static se.ld46.game.util.WorldCamera.worldCamera;
 
 
@@ -36,7 +35,7 @@ public class Game extends ApplicationAdapter {
         engine = EngineBuilder
                 .engineBuilder()
                 .withEntity(OrcFactory.create(48, 50, 2, 2))
-                .withEntity(ItemFactory.create(40, 50, 1, 1))
+                .withEntity(ItemFactory.create(40, 50, 1, 1, assetManagerWrapper().get(ITEM_WOOD), assetManagerWrapper().get(ITEM_WOOD_TAKEN)))
                 .withEntity(MousePointerFactory.create(47, 50))
                 .withEntity(TiledMapFactory.create())
                 .withEntitySystem(new MapRenderingSystem(0, worldCamera()))
@@ -50,9 +49,10 @@ public class Game extends ApplicationAdapter {
                 .withEntitySystem(tiledDebugMapRendered)
                 .withEntitySystem(new UtilSystem(collisionMapRendered, tiledDebugMapRendered))
                 .withEntitySystem(new HudSystem(6))
-                .withEntitySystem(new ClickItemSystem()) // TODO: [A.B.] item
+                .withEntitySystem(new ClickItemSystem())
                 .withEntitySystem(new MousePointerSystem(10))
                 .withEntitySystem(new ActionDecisionSystem())
+                .withEntitySystem(new MoveToInventorySystem())
                 .build();
 
 

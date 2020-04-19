@@ -4,15 +4,14 @@ import com.badlogic.ashley.core.Entity;
 import se.ld46.game.Item;
 import se.ld46.game.components.*;
 
-import static se.ld46.game.util.AssetManagerWrapper.ORC_PNG;
-import static se.ld46.game.util.AssetManagerWrapper.assetManagerWrapper;
+import static se.ld46.game.util.AssetManagerWrapper.*;
 
 
 public class OrcFactory {
     public static Entity create(int x, int y, int with, int height) {
         Entity orc = new Entity();
 
-        Item[] items = {() -> "Item 1", () -> "Item 2"};
+        Item[] items = {() -> assetManagerWrapper().get(ITEM_WOOD_TAKEN)};
 
         orc.add(new Position(x, y));
         orc.add(new Size(with, height, 4f));
@@ -20,7 +19,7 @@ public class OrcFactory {
         orc.add(new SelectedForMovement());
         orc.add(new Health(5));
         orc.add(new Hunger(5));
-        orc.add(new Inventory(items));
+        orc.add(new Inventory(items, assetManagerWrapper().get(EMPTY)));
 
         return orc;
     }

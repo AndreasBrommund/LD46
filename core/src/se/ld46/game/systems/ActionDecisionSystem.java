@@ -15,6 +15,7 @@ public class ActionDecisionSystem extends EntitySystem {
     private ComponentMapper<SelectedForMovement> sfm = getFor(SelectedForMovement.class);
     private ComponentMapper<Position> pm = getFor(Position.class);
     private ComponentMapper<ActionDecision> adm = getFor(ActionDecision.class);
+    private ComponentMapper<PickableItem> pim = getFor(PickableItem.class);
     ImmutableArray<Entity> movementEntities;
     ImmutableArray<Entity> actionDecisionEntites;
 
@@ -46,6 +47,9 @@ public class ActionDecisionSystem extends EntitySystem {
                 Gdx.app.log("DST", "The distance is " + playerVec.dst(ad.clicked));
                 if (playerVec.dst(ad.clicked) < 2.5f) {
                     //no need to move to target
+                    if (pim.has(e)) {
+                        e.add(new MoveToInventory());
+                    }
                     e.remove(Visual.class);
                 } else {
                     //need  to move to target..
