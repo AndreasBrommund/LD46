@@ -9,6 +9,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.math.Vector2;
 import se.ld46.game.collisionmap.CollisionMap;
+import se.ld46.game.entityfactories.ItemFactory;
+import se.ld46.game.entityfactories.MousePointerFactory;
 import se.ld46.game.entityfactories.OrcFactory;
 import se.ld46.game.entityfactories.TiledMapFactory;
 import se.ld46.game.systems.*;
@@ -34,6 +36,8 @@ public class Game extends ApplicationAdapter {
         engine = EngineBuilder
                 .engineBuilder()
                 .withEntity(OrcFactory.create(48, 50, 2, 2))
+                .withEntity(ItemFactory.create(40, 50, 1, 1))
+                .withEntity(MousePointerFactory.create(47, 50))
                 .withEntity(TiledMapFactory.create())
                 .withEntitySystem(new MapRenderingSystem(0, worldCamera()))
                 .withEntitySystem(entitySystem)
@@ -45,6 +49,8 @@ public class Game extends ApplicationAdapter {
                 .withEntitySystem(new MoveToGoalSystem(0.2f))
                 .withEntitySystem(entitySystem1)
                 .withEntitySystem(new UtilSystem(entitySystem, entitySystem1))
+                .withEntitySystem(new ClickItemSystem())
+                .withEntitySystem(new MousePointerSystem(10))
                 .build();
 
 

@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import se.ld46.game.components.MousePointer;
 import se.ld46.game.components.Position;
 import se.ld46.game.components.Size;
 import se.ld46.game.components.Visual;
@@ -22,7 +23,7 @@ public class RenderSystem extends IteratingSystem {
     private SpriteBatch batch;
 
     public RenderSystem(WorldCamera worldCamera, int priority) {
-        super(Family.all(Visual.class, Position.class, Size.class).get(), priority);
+        super(Family.all(Visual.class, Position.class, Size.class).exclude(MousePointer.class).get(), priority);
         this.batch = new SpriteBatch();
         camera = worldCamera.camera;
     }

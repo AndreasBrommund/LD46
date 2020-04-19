@@ -14,6 +14,8 @@ public final class AssetManagerWrapper {
 
     public final static String BACKGROUND_TMX = "collisionmap/map.tmx";
     public final static String ORC_PNG = "orc2.png";
+    public final static String POINT_PNG = "point.png";
+    public static final String CLICK_PNG = "click.png";
 
     private AssetManagerWrapper() {
         assetManager = new AssetManager();
@@ -26,6 +28,9 @@ public final class AssetManagerWrapper {
         //Textures
         assetManager.setLoader(Texture.class, new TextureLoader(new InternalFileHandleResolver()));
         assetManager.load(ORC_PNG, Texture.class);
+
+        assetManager.load(POINT_PNG, Texture.class);
+        assetManager.load(CLICK_PNG, Texture.class);
 
         assetManager.finishLoading();
     }

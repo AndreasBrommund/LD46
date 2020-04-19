@@ -9,6 +9,7 @@ public class GameInputProcessor implements InputProcessor {
 
     private final ArrayList<TouchDownSubscriber> touchDownSubscribers = new ArrayList<>();
     private final ArrayList<KeyDownSubscriber> keyDownSubscribers = new ArrayList<>();
+    private final ArrayList<MouseMoveSubscriber> mouseMoveSubscribers = new ArrayList<>();
 
     public void add(TouchDownSubscriber subscriber) {
         touchDownSubscribers.add(subscriber);
@@ -16,6 +17,10 @@ public class GameInputProcessor implements InputProcessor {
 
     public void add(KeyDownSubscriber subscriber) {
         keyDownSubscribers.add(subscriber);
+    }
+
+    public void add(MouseMoveSubscriber subscriber) {
+        mouseMoveSubscribers.add(subscriber);
     }
 
     private GameInputProcessor() {
@@ -62,6 +67,7 @@ public class GameInputProcessor implements InputProcessor {
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
+        mouseMoveSubscribers.forEach(s -> s.onMouseMove(screenX, screenY));
         return false;
     }
 
