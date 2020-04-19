@@ -47,10 +47,7 @@ public class ActionDecisionSystem extends EntitySystem {
                 Gdx.app.log("DST", "The distance is " + playerVec.dst(ad.clicked));
                 if (playerVec.dst(ad.clicked) < 2.5f) {
                     //no need to move to target
-                    if (pim.has(e)) {
-                        e.add(new MoveToInventory());
-                    }
-                    e.remove(Visual.class);
+                    e.add(new Takeing());
                 } else {
                     //need  to move to target..
                     Location start = new Location(playerPos.x, playerPos.y);

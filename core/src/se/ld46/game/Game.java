@@ -9,12 +9,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.math.Vector2;
 import se.ld46.game.collisionmap.CollisionMap;
-import se.ld46.game.entityfactories.*;
 import se.ld46.game.components.Hunger;
-import se.ld46.game.entityfactories.ItemFactory;
-import se.ld46.game.entityfactories.MousePointerFactory;
-import se.ld46.game.entityfactories.OrcFactory;
-import se.ld46.game.entityfactories.TiledMapFactory;
+import se.ld46.game.entityfactories.*;
 import se.ld46.game.systems.*;
 import se.ld46.game.util.Config;
 
@@ -60,9 +56,12 @@ public class Game extends ApplicationAdapter {
                 .withEntitySystem(new ClickItemSystem())
                 .withEntitySystem(new MousePointerSystem(10))
                 .withEntitySystem(new ActionDecisionSystem())
-                .withEntitySystem(new MoveToInventorySystem())
+
                 .withEntitySystem(new HealthSystem(0))
                 .withEntitySystem(new FireSystem(1))
+                .withEntitySystem(new TakeingSystem(20))
+                .withEntitySystem(new MoveToInventorySystem(21))
+                .withEntitySystem(new RemovingSystem(Integer.MAX_VALUE))
                 .build();
 
 

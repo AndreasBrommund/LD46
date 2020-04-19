@@ -13,6 +13,9 @@ import se.ld46.game.components.PickableItem;
 import static com.badlogic.ashley.core.ComponentMapper.getFor;
 
 public class MoveToInventorySystem extends EntitySystem {
+    public MoveToInventorySystem(int prio) {
+        super(prio);
+    }
 
     @Override
     public void update(final float deltaTime) {
