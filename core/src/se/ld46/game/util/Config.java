@@ -11,4 +11,6 @@ public final class Config {
     public final static int DEFAULT_VIEWPORT_HEIGHT = 45;
 
     public final static int TILE_SIZE = 16;
+
+    public static boolean DEBUG = false;
 }

@@ -31,8 +31,8 @@ public class Game extends ApplicationAdapter {
     public void create() {
 
 
-        CollisionMapRendered entitySystem = new CollisionMapRendered(1, worldCamera());
-        TiledDebugMapRendered entitySystem1 = new TiledDebugMapRendered(3, worldCamera());
+        CollisionMapRendered collisionMapRendered = new CollisionMapRendered(1, worldCamera());
+        TiledDebugMapRendered tiledDebugMapRendered = new TiledDebugMapRendered(3, worldCamera());
         engine = EngineBuilder
                 .engineBuilder()
                 .withEntity(OrcFactory.create(48, 50, 2, 2))
@@ -40,16 +40,17 @@ public class Game extends ApplicationAdapter {
                 .withEntity(MousePointerFactory.create(47, 50))
                 .withEntity(TiledMapFactory.create())
                 .withEntitySystem(new MapRenderingSystem(0, worldCamera()))
-                .withEntitySystem(entitySystem)
+                .withEntitySystem(collisionMapRendered)
                 .withEntitySystem(new RenderSystem(worldCamera(), 2))
                 .withEntitySystem(new CameraControlSystem(4, worldCamera()))
-                .withEntitySystem(new HungerSystem(5, 2)) //2 seconds
+                .withEntitySystem(new HungerSystem(10, 2))
                 .withEntitySystem(new ClickToMoveSystem())
                 .withEntitySystem(new PathfindingSystem())
                 .withEntitySystem(new MoveToGoalSystem(0.2f))
-                .withEntitySystem(entitySystem1)
-                .withEntitySystem(new UtilSystem(entitySystem, entitySystem1))
-                .withEntitySystem(new ClickItemSystem())
+                .withEntitySystem(tiledDebugMapRendered)
+                .withEntitySystem(new UtilSystem(collisionMapRendered, tiledDebugMapRendered))
+                .withEntitySystem(new HudSystem(6))
+                .withEntitySystem(new ClickItemSystem()) // TODO: [A.B.] item
                 .withEntitySystem(new MousePointerSystem(10))
                 .withEntitySystem(new ActionDecisionSystem())
                 .build();

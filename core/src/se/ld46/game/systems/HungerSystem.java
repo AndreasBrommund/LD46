@@ -17,7 +17,7 @@ public class HungerSystem extends IntervalIteratingSystem {
     @Override
     protected void processEntity(final Entity entity) {
         Hunger hunger = hungerComponentMapper.get(entity);
-        hunger.currentHunger = Math.max(hunger.currentHunger + 1, hunger.maxHunger);
+        hunger.current = Math.min(hunger.current + 1, hunger.max);
     }
 }
 
