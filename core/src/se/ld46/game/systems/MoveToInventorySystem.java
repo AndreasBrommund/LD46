@@ -6,7 +6,9 @@ import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.graphics.Texture;
+import se.ld46.game.Item;
 import se.ld46.game.components.Inventory;
+import se.ld46.game.components.ItemType;
 import se.ld46.game.components.MoveToInventory;
 import se.ld46.game.components.PickableItem;
 
@@ -38,11 +40,21 @@ public class MoveToInventorySystem extends EntitySystem {
 
             Inventory inventory = inventoryComponentMapper.get(entitiesWithInventory.first());
 
-            for (int i = 0; i < inventory.empty.length; i++) {
+            for (int i = 0; i < inventory.items.length; i++) {
                 Texture texture = item.texture;
-                if (inventory.empty[i]) {
-                    inventory.empty[i] = false;
-                    inventory.items[i] = () -> texture;
+                ItemType type = item.type;
+                if (inventory.items[i].type() == ItemType.EMPTY) {
+                    inventory.items[i] = new Item() {
+                        @Override
+                        public Texture texture() {
+                            return texture;
+                        }
+
+                        @Override
+                        public ItemType type() {
+                            return type;
+                        }
+                    };
                     break;
                 }
             }

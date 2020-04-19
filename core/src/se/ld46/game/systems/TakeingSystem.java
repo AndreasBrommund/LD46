@@ -15,14 +15,12 @@ public class TakeingSystem extends IteratingSystem {
     private ComponentMapper<PickableItem> pim = getFor(PickableItem.class);
 
     public TakeingSystem(int prio) {
-        super(Family.all(Takeing.class).get(), prio);
+        super(Family.all(Takeing.class, PickableItem.class).get(), prio);
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        if (pim.has(entity)) {
-            entity.add(new MoveToInventory()); //TODO: Mabe add to MoveToInventory what we are picking up?
-        }
+        entity.add(new MoveToInventory()); //TODO: Mabe add to MoveToInventory what we are picking up?
         entity.add(new Remove());
     }
 }

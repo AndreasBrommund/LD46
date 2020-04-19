@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.math.Vector2;
 import se.ld46.game.collisionmap.CollisionMap;
 import se.ld46.game.components.Hunger;
+import se.ld46.game.components.ItemType;
 import se.ld46.game.entityfactories.*;
 import se.ld46.game.systems.*;
 import se.ld46.game.util.Config;
@@ -38,7 +39,19 @@ public class Game extends ApplicationAdapter {
                         1,
                         1,
                         assetManagerWrapper().get(ITEM_WOOD),
-                        assetManagerWrapper().get(ITEM_WOOD_TAKEN)))
+                        assetManagerWrapper().get(ITEM_WOOD_TAKEN), ItemType.WOOD))
+                .withEntity(ItemFactory.create(46,
+                        48,
+                        1,
+                        1,
+                        assetManagerWrapper().get(ITEM_WOOD),
+                        assetManagerWrapper().get(ITEM_WOOD_TAKEN), ItemType.WOOD))
+                .withEntity(ItemFactory.create(42,
+                        47,
+                        1,
+                        1,
+                        assetManagerWrapper().get(ROD),
+                        assetManagerWrapper().get(ROD_TAKEN), ItemType.ROD))
                 .withEntity(MousePointerFactory.create(47, 50))
                 .withEntity(FireFactory.create(50, 50, 1, 1, assetManagerWrapper().get(NO_FIRE)))
                 .withEntity(TiledMapFactory.create())
@@ -77,7 +90,7 @@ public class Game extends ApplicationAdapter {
         });
 
         CollisionMap.createCollisionMap(blockedPositions);
-
+        CollisionMap.data[49][49] = 1; //N.b THIS IS THE FIRES POSITON
 
 
         Gdx.input.setInputProcessor(gameInputProcessor());

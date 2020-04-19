@@ -5,8 +5,10 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class PickableItem implements Component {
     public Texture texture;
+    public ItemType type;
 
-    public PickableItem(final Texture texture) {
+    public PickableItem(Texture texture, ItemType type) {
         this.texture = texture;
+        this.type = type;
     }
 }
