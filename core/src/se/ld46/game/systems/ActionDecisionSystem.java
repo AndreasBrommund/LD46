@@ -44,8 +44,7 @@ public class ActionDecisionSystem extends EntitySystem {
                 Vector2 playerVec = new Vector2(playerPos.x, playerPos.y);
 
                 ActionDecision ad = adm.get(e);
-                Gdx.app.log("DST", "The distance is " + playerVec.dst(ad.clicked));
-                if (playerVec.dst(ad.clicked) < 2.5f) {
+                if (playerVec.dst(ad.clicked) < 2f) {
                     //no need to move to target
                     e.add(new Takeing());
                 } else {

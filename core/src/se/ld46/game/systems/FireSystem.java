@@ -6,7 +6,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IntervalIteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector3;
 import se.ld46.game.components.Fire;
@@ -64,7 +63,6 @@ public class FireSystem extends IntervalIteratingSystem implements TouchDownSubs
     protected void processEntity(Entity entity) {
         Visual v = vm.get(entity);
         Fire f = firemap.get(entity);
-        Gdx.app.log("debug", "Fire:" + f.fuel);
         if (f.fuel == 0) {
             v.texture = assetManagerWrapper().get(NO_FIRE);
         } else if (0 < f.fuel && f.fuel < 50) {
