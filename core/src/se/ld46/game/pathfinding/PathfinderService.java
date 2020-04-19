@@ -36,7 +36,7 @@ public class PathfinderService {
             Location currentLocation = currentNode.location;
             int currentTravelCost = currentNode.travelCost;
 
-            ArrayList<Location> successors = generateSuccessor(currentLocation);
+            ArrayList<Location> successors = generateSuccessor(currentLocation, map);
             for (Location successor : successors) { //process each successor location
 
                 if (hasSuccessorReachedGoal(goal, successor)) {
@@ -85,8 +85,8 @@ public class PathfinderService {
     }
 
     //This function basically checks all the potential new locations, one step from the current location and store them in a list
-    //In this implementation we can move in all 8 directions and we move with a delta of 1 in each step.
-    private ArrayList<Location> generateSuccessor(Location currentLocation) {
+    //In this implementation we can move in all 4 directions and we move with a delta of 1 in each step.
+    private ArrayList<Location> generateSuccessor(Location currentLocation, int[][] map) {
         ArrayList<Location> successors = new ArrayList<>();
 
         //might butcher the up down stuffs but whatever.
@@ -107,8 +107,11 @@ public class PathfinderService {
         successors.add(left);
         successors.add(right);
 
+        //Remove succesors outside of the world
         successors = successors.stream().filter(l -> 0 <= l.x && l.x < Config.WORLD_WIDTH && 0 <= l.y && l.y < Config.WORLD_HEIGHT).collect(Collectors.toCollection(ArrayList::new));
 
+        //Remove successors that are blocked
+        successors = successors.stream().filter(l -> map[l.y][l.x] == 0).collect(Collectors.toCollection(ArrayList::new));
 
         return successors;
     }
