@@ -6,7 +6,7 @@ import se.ld46.game.components.Position;
 import se.ld46.game.components.Size;
 import se.ld46.game.components.Visual;
 
-import static se.ld46.game.util.AssetManagerWrapper.ORC_PNG;
+import static se.ld46.game.util.AssetManagerWrapper.ITEM_WOOD;
 import static se.ld46.game.util.AssetManagerWrapper.assetManagerWrapper;
 
 public class ItemFactory {
@@ -15,7 +15,7 @@ public class ItemFactory {
 
         orc.add(new Position(x, y));
         orc.add(new Size(with, height, 1f));
-        orc.add(new Visual(assetManagerWrapper().get(ORC_PNG)));
+        orc.add(new Visual(assetManagerWrapper().get(ITEM_WOOD)));
         orc.add(new ClickableItem());
         return orc;
     }

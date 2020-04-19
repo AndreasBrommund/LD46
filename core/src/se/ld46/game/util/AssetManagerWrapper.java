@@ -16,6 +16,8 @@ public final class AssetManagerWrapper {
     public final static String ORC_PNG = "orc2.png";
     public final static String POINT_PNG = "point.png";
     public static final String CLICK_PNG = "click.png";
+    public static final String ITEM_WOOD = "item.png";
+
 
     private AssetManagerWrapper() {
         assetManager = new AssetManager();
@@ -31,6 +33,7 @@ public final class AssetManagerWrapper {
 
         assetManager.load(POINT_PNG, Texture.class);
         assetManager.load(CLICK_PNG, Texture.class);
+        assetManager.load(ITEM_WOOD, Texture.class);
 
         assetManager.finishLoading();
     }
