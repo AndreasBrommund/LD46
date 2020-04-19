@@ -60,7 +60,7 @@ public class HudSystem extends IteratingSystem {
         Inventory inventory = inventoryComponentMapper.get(entity);
         stage.addActor(inventoryTable(Arrays.asList(inventory.items)));
         Fire f = fireComponentMapper.get(fire.first());
-        String s = String.format("Fire: %s", f.fuel);
+        String s = "Fire: " + f.fuel;
         stage.addActor(statsTable(Arrays.asList(health.print(), hunger.print(), s)));
 
         stage.draw();
