@@ -8,11 +8,9 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
 import se.ld46.game.Item;
-import se.ld46.game.components.Fire;
-import se.ld46.game.components.FireInteract;
-import se.ld46.game.components.Inventory;
-import se.ld46.game.components.ItemType;
+import se.ld46.game.components.*;
 
 import java.util.Arrays;
 
@@ -44,8 +42,8 @@ public class FireInteractionSystem extends IteratingSystem {
 
     private void clickOnFire(Entity player) {
         Inventory inventory = inventoryComponentMapper.get(player);
+        Fire f = firemapper.get(fires.first());
         if (Arrays.stream(inventory.items).anyMatch(i -> i.type() == ItemType.WOOD)) {
-            Fire f = firemapper.get(fires.first());
             f.fuel += 10;
             for (int i = 0; i < inventory.items.length; i++) {
                 if (inventory.items[i].type() == ItemType.WOOD) {
@@ -63,8 +61,28 @@ public class FireInteractionSystem extends IteratingSystem {
                     break;
                 }
             }
+        } else if (Arrays.stream(inventory.items).anyMatch(fish -> fish.type() == ItemType.FISH)) {
+            if (f.fuel >= 0) {
+                player.add(new Eat(MathUtils.random(1, 3)));
+                for (int i = 0; i < inventory.items.length; i++) {
+                    if (inventory.items[i].type() == ItemType.FISH) {
+                        inventory.items[i] = new Item() {
+                            @Override
+                            public Texture texture() {
+                                return assetManagerWrapper().get(EMPTY);
+                            }
+
+                            @Override
+                            public ItemType type() {
+                                return ItemType.EMPTY;
+                            }
+                        };
+                        break;
+                    }
+                }
+            }
         } else {
-            Gdx.app.log("DEBUG", "Missing wood");
+            Gdx.app.log("DEBUG", "Missing anything useful to put on fire");
         }
     }
 }

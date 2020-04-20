@@ -7,10 +7,13 @@ import com.badlogic.ashley.systems.IntervalIteratingSystem;
 import se.ld46.game.components.Health;
 import se.ld46.game.components.Hunger;
 
+import static com.badlogic.ashley.core.ComponentMapper.getFor;
+
 public class HungerSystem extends IntervalIteratingSystem {
 
-    private ComponentMapper<Hunger> hungerComponentMapper = ComponentMapper.getFor(Hunger.class);
-    private ComponentMapper<Health> healthComponentMapper = ComponentMapper.getFor(Health.class);
+    private ComponentMapper<Hunger> hungerComponentMapper = getFor(Hunger.class);
+    private ComponentMapper<Health> healthComponentMapper = getFor(Health.class);
+
 
     public HungerSystem(final float interval, final int priority) {
         super(Family.all(Hunger.class, Health.class).get(), interval, priority);
