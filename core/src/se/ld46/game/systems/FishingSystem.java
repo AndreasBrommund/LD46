@@ -10,14 +10,16 @@ import se.ld46.game.components.*;
 import se.ld46.game.util.PositionUtil;
 
 import java.util.Arrays;
+import java.util.Random;
 
 import static com.badlogic.ashley.core.ComponentMapper.getFor;
 
 public class FishingSystem extends IteratingSystem {
     ImmutableArray<Entity> players;
     private ComponentMapper<Position> pm = getFor(Position.class);
+    private ComponentMapper<Fishing> fm = getFor(Fishing.class);
     private float timedFished = 0;
-    private float period = 5;//TODO: Andreas solve binomial distrubtion of this instead of fixed time span
+
 
     public FishingSystem() {
         super(Family.all(Fishing.class, Position.class).get());
@@ -34,7 +36,7 @@ public class FishingSystem extends IteratingSystem {
         if (playerHasRod()) {
             System.out.println("We are fishing here!");
 
-            if (period < timedFished) {
+            if (fm.get(entity).period < timedFished) {
                 System.out.println("You got a fish!");
                 entity.add(new MoveToInventory());
                 entity.remove(Fishing.class);
@@ -59,5 +61,10 @@ public class FishingSystem extends IteratingSystem {
     private boolean playerHasRod() {
         Inventory i = inv.get(players.first());
         return Arrays.stream(i.items).anyMatch(it -> it.type() == ItemType.ROD);
+    }
+
+
+    public static int getGaussian() {
+        return (int) ((double) 5 + new Random().nextGaussian() * 1.0);
     }
 }
