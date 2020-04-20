@@ -8,4 +8,8 @@ public class Countdown implements Component {
     public Countdown(final int timeLeft) {
         this.timeLeft = timeLeft;
     }
+
+    public String print() {
+        return "Time left: " + timeLeft / 60 + "." + timeLeft % 60;
+    }
 }

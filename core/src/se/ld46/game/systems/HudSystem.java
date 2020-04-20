@@ -15,10 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import se.ld46.game.Item;
-import se.ld46.game.components.Fire;
-import se.ld46.game.components.Health;
-import se.ld46.game.components.Hunger;
-import se.ld46.game.components.Inventory;
+import se.ld46.game.components.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,6 +27,7 @@ import static se.ld46.game.util.Config.DEBUG;
 public class HudSystem extends IteratingSystem {
     private ComponentMapper<Health> healthComponentMapper = getFor(Health.class);
     private ComponentMapper<Hunger> hungerComponentMapper = getFor(Hunger.class);
+    private ComponentMapper<Countdown> countdownComponentMapper = getFor(Countdown.class);
     private ComponentMapper<Inventory> inventoryComponentMapper = getFor(Inventory.class);
     private ComponentMapper<Fire> fireComponentMapper = getFor(Fire.class);
     private Stage stage;
@@ -40,7 +38,7 @@ public class HudSystem extends IteratingSystem {
     private final static LabelStyle labelStyle = new LabelStyle(new BitmapFont(), Color.WHITE);
 
     public HudSystem(int priority) {
-        super(Family.all(Health.class, Hunger.class, Inventory.class).get(), priority);
+        super(Family.all(Health.class, Hunger.class, Inventory.class, Countdown.class).get(), priority);
         stage = new Stage();
 
     }
@@ -57,11 +55,12 @@ public class HudSystem extends IteratingSystem {
         stage.clear();
         Health health = healthComponentMapper.get(entity);
         Hunger hunger = hungerComponentMapper.get(entity);
+        Countdown countdown = countdownComponentMapper.get(entity);
         Inventory inventory = inventoryComponentMapper.get(entity);
         stage.addActor(inventoryTable(Arrays.asList(inventory.items)));
         Fire f = fireComponentMapper.get(fire.first());
         String s = "Fire: " + f.fuel;
-        stage.addActor(statsTable(Arrays.asList(health.print(), hunger.print(), s)));
+        stage.addActor(statsTable(Arrays.asList(health.print(), hunger.print(), s, countdown.print())));
 
         stage.draw();
 
