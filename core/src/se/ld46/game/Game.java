@@ -4,6 +4,8 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
@@ -16,6 +18,7 @@ import se.ld46.game.systems.*;
 import se.ld46.game.util.Config;
 
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 import static se.ld46.game.input.GameInputProcessor.gameInputProcessor;
 import static se.ld46.game.util.AssetManagerWrapper.*;
@@ -101,9 +104,36 @@ public class Game extends ApplicationAdapter {
 
     @Override
     public void render() {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        engine.update(Gdx.graphics.getDeltaTime());
+        Config.gameState.task.accept(engine);
+    }
+
+
+    public enum GameState {
+        RUN(engine -> {
+            Gdx.gl.glClearColor(0, 0, 0, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            engine.update(Gdx.graphics.getDeltaTime());
+        }),
+        GAME_OVER(engine -> {
+            SpriteBatch batch = new SpriteBatch();
+            BitmapFont font = new BitmapFont();
+            batch.begin();
+            font.draw(batch, "GAME OVER!", (float) Config.SCREEN_WIDTH / 2, (float) Config.SCREEN_HEIGHT / 2);
+            batch.end();
+        }),
+        WON(engine -> {
+            SpriteBatch batch = new SpriteBatch();
+            BitmapFont font = new BitmapFont();
+            batch.begin();
+            font.draw(batch, "YOU SURVIVED!", (float) Config.SCREEN_WIDTH / 2, (float) Config.SCREEN_HEIGHT / 2);
+            batch.end();
+        });
+
+        public transient final Consumer<Engine> task;
+
+        GameState(final Consumer<Engine> task) {
+            this.task = task;
+        }
     }
 
 }
