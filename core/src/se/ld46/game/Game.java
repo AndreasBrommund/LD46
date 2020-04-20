@@ -46,18 +46,21 @@ public class Game extends ApplicationAdapter {
                         ItemType.FISH,
                         ClickType.FISH))
                 .withEntity(OrcFactory.create(55, 50, 2, 2))
-                .withEntity(ItemFactory.create(46,
-                        50,
-                        1,
-                        1,
-                        assetManagerWrapper().get(ITEM_WOOD),
-                        assetManagerWrapper().get(ITEM_WOOD_TAKEN), ItemType.WOOD))
-                .withEntity(ItemFactory.create(46,
-                        48,
-                        1,
-                        1,
-                        assetManagerWrapper().get(ITEM_WOOD),
-                        assetManagerWrapper().get(ITEM_WOOD_TAKEN), ItemType.WOOD))
+                .withEntity(ItemFactory.create(46, 50, 1, 1, assetManagerWrapper().get(ITEM_WOOD), assetManagerWrapper().get(ITEM_WOOD_TAKEN), ItemType.WOOD))
+                .withEntity(ItemFactory.create(46, 48, 1, 1, assetManagerWrapper().get(ITEM_WOOD), assetManagerWrapper().get(ITEM_WOOD_TAKEN), ItemType.WOOD))
+                .withEntity(ItemFactory.create(40, 48, 1, 1, assetManagerWrapper().get(ITEM_WOOD), assetManagerWrapper().get(ITEM_WOOD_TAKEN), ItemType.WOOD))
+                .withEntity(ItemFactory.create(48, 40, 1, 1, assetManagerWrapper().get(ITEM_WOOD), assetManagerWrapper().get(ITEM_WOOD_TAKEN), ItemType.WOOD))
+                .withEntity(ItemFactory.create(20, 90, 1, 1, assetManagerWrapper().get(ITEM_WOOD), assetManagerWrapper().get(ITEM_WOOD_TAKEN), ItemType.WOOD))
+                .withEntity(ItemFactory.create(46, 10, 1, 1, assetManagerWrapper().get(ITEM_WOOD), assetManagerWrapper().get(ITEM_WOOD_TAKEN), ItemType.WOOD))
+                .withEntity(ItemFactory.create(46, 48, 1, 1, assetManagerWrapper().get(ITEM_WOOD), assetManagerWrapper().get(ITEM_WOOD_TAKEN), ItemType.WOOD))
+                .withEntity(ItemFactory.create(20, 60, 1, 1, assetManagerWrapper().get(ITEM_WOOD), assetManagerWrapper().get(ITEM_WOOD_TAKEN), ItemType.WOOD))
+                .withEntity(ItemFactory.create(70, 10, 1, 1, assetManagerWrapper().get(ITEM_WOOD), assetManagerWrapper().get(ITEM_WOOD_TAKEN), ItemType.WOOD))
+                .withEntity(ItemFactory.create(35, 10, 1, 1, assetManagerWrapper().get(ITEM_WOOD), assetManagerWrapper().get(ITEM_WOOD_TAKEN), ItemType.WOOD))
+                .withEntity(ItemFactory.create(70, 35, 1, 1, assetManagerWrapper().get(ITEM_WOOD), assetManagerWrapper().get(ITEM_WOOD_TAKEN), ItemType.WOOD))
+                .withEntity(ItemFactory.create(70, 70, 1, 1, assetManagerWrapper().get(ITEM_WOOD), assetManagerWrapper().get(ITEM_WOOD_TAKEN), ItemType.WOOD))
+                .withEntity(ItemFactory.create(60, 55, 1, 1, assetManagerWrapper().get(ITEM_WOOD), assetManagerWrapper().get(ITEM_WOOD_TAKEN), ItemType.WOOD))
+
+
                 .withEntity(ItemFactory.create(42,
                         47,
                         1,
