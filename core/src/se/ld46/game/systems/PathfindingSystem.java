@@ -4,7 +4,9 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.Gdx;
 import se.ld46.game.collisionmap.CollisionMap;
+import se.ld46.game.components.Dialog;
 import se.ld46.game.components.GoalPath;
 import se.ld46.game.components.Pathfinding;
 import se.ld46.game.pathfinding.Location;
@@ -30,6 +32,9 @@ public class PathfindingSystem extends IteratingSystem {
         ArrayList<Location> pathToGoal = pathfinderService.find(collisionMap, p.start, p.goal);
         if (pathToGoal.size() != 0) {
             entity.add(new GoalPath(pathToGoal));
+        } else {
+            Gdx.app.log("Pathfinder", "no path to goal");
+            entity.add(new Dialog("Could not find a way there, try again", 1));
         }
         entity.remove(Pathfinding.class);
     }

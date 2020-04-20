@@ -8,8 +8,12 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import se.ld46.game.collisionmap.CollisionMap;
 import se.ld46.game.components.*;
 import se.ld46.game.pathfinding.Location;
+import se.ld46.game.pathfinding.PathfinderService;
+
+import java.util.ArrayList;
 
 import static com.badlogic.ashley.core.ComponentMapper.getFor;
 
@@ -17,7 +21,7 @@ public class ActionOrMoveToSystem extends IteratingSystem {
     private ComponentMapper<Position> pm = getFor(Position.class);
     private ComponentMapper<ActionOrMoveToPosition> amm = getFor(ActionOrMoveToPosition.class);
     ImmutableArray<Entity> playerEntity;
-    private static final float ALLOWED_DISTANCE = 2.5f;
+    private static final float ALLOWED_DISTANCE = 2f;
 
     public ActionOrMoveToSystem() {
         super(Family.all(ActionOrMoveToPosition.class).get());
@@ -52,13 +56,14 @@ public class ActionOrMoveToSystem extends IteratingSystem {
 
         switch (am.action) {
             case PICKUP:
-                entity.add(new ActionOnceClose(Takeing.class, 0.5f, false));
+                entity.add(new ActionOnceClose(Takeing.class, 2, false));
                 break;
             case FIRE:
-                entity.add(new ActionOnceClose(FireInteract.class, 0.5f, true));
+                entity.add(new ActionOnceClose(FireInteract.class, 2, true));
                 break;
             case FISH:
-                entity.add(new ActionOnceClose(Fishing.class, 0.5f, false));
+                Gdx.app.log("ActionOrMoveToSystem", "Apply actiononceclose with fish");
+                entity.add(new ActionOnceClose(Fishing.class, 2, false));
                 break;
         }
 

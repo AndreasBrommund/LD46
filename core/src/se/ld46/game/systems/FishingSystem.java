@@ -34,10 +34,9 @@ public class FishingSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         if (playerHasRod()) {
-            System.out.println("We are fishing here!");
-
+            entity.add(new Dialog("Fishing...", 0.1f));
             if (fm.get(entity).period < timedFished) {
-                System.out.println("You got a fish!");
+                entity.add(new Dialog("You got a fish!", 3));
                 entity.add(new MoveToInventory());
                 entity.remove(Fishing.class);
                 entity.add(new Remove());
@@ -46,7 +45,8 @@ public class FishingSystem extends IteratingSystem {
                 timedFished += deltaTime;
             }
         } else {
-            System.out.println("I have nothing to fish with");
+            entity.add(new Dialog("I have nothing to fish with", 3));
+
         }
         Position fishPos = pm.get(entity);
         Position playerPos = pm.get(players.first());

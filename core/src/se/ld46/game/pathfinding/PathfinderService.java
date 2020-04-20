@@ -86,7 +86,7 @@ public class PathfinderService {
 
     //This function basically checks all the potential new locations, one step from the current location and store them in a list
     //In this implementation we can move in all 4 directions and we move with a delta of 1 in each step.
-    private ArrayList<Location> generateSuccessor(Location currentLocation, int[][] map) {
+    public ArrayList<Location> generateSuccessor(Location currentLocation, int[][] map) {
         ArrayList<Location> successors = new ArrayList<>();
 
         //might butcher the up down stuffs but whatever.

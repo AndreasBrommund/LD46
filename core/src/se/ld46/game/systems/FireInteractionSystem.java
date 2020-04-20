@@ -45,6 +45,7 @@ public class FireInteractionSystem extends IteratingSystem {
         Fire f = firemapper.get(fires.first());
         if (Arrays.stream(inventory.items).anyMatch(i -> i.type() == ItemType.WOOD)) {
             f.fuel += 10;
+            fires.first().add(new Dialog("+10 Fuel", 1));
             for (int i = 0; i < inventory.items.length; i++) {
                 if (inventory.items[i].type() == ItemType.WOOD) {
                     inventory.items[i] = new Item() {
@@ -62,7 +63,7 @@ public class FireInteractionSystem extends IteratingSystem {
                 }
             }
         } else if (Arrays.stream(inventory.items).anyMatch(fish -> fish.type() == ItemType.FISH)) {
-            if (f.fuel >= 0) {
+            if (f.fuel > 0) {
                 player.add(new Eat(MathUtils.random(1, 3)));
                 for (int i = 0; i < inventory.items.length; i++) {
                     if (inventory.items[i].type() == ItemType.FISH) {
@@ -80,8 +81,11 @@ public class FireInteractionSystem extends IteratingSystem {
                         break;
                     }
                 }
+            } else {
+                fires.first().add(new Dialog("The fire is not burning. Can't cook fish.", 2));
             }
         } else {
+            fires.first().add(new Dialog("Missing anything useful to put on fire. You need wood or fish.", 5));
             Gdx.app.log("DEBUG", "Missing anything useful to put on fire");
         }
     }

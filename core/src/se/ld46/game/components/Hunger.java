@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Component;
 
 
 public class Hunger implements Component {
-    public final static int INCREASE_RATE = 5; //Seconds
+    public final static int INCREASE_RATE = 15; //Seconds
 
     public int current;
     public int max;
