@@ -20,6 +20,7 @@ public class OrcFactory {
         orc.add(new Inventory(assetManagerWrapper().get(EMPTY)));
         orc.add(new Countdown(Config.TIME_UNTIL_RESCUED));
         orc.add(new Rescuabled());
+        orc.add(new Dialog("Welcome try to survive!", 10));
 
         return orc;
     }

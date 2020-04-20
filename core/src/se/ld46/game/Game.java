@@ -96,6 +96,7 @@ public class Game extends ApplicationAdapter {
                 .withEntitySystem(new NightRenderingSystem())
                 .withEntitySystem(new CountdownSystem())
                 .withEntitySystem(new WinSystem())
+                .withEntitySystem(new DialogSystem())
                 .build();
 
 
