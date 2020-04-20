@@ -4,5 +4,6 @@ public enum ItemType {
     EMPTY,
     WOOD,
     ROD,
+    FISH,
     FOOD;
 }

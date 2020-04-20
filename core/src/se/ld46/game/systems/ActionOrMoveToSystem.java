@@ -38,21 +38,24 @@ public class ActionOrMoveToSystem extends IteratingSystem {
             applyActionComponent(entity, am);
         } else {
             applyPathfindingComponent(entity);
-            applyActOnceThereComponent(entity);
+            applyActionOnceThereComponent(entity);
         }
 
         entity.remove(ActionOrMoveToPosition.class);
     }
 
-    private void applyActOnceThereComponent(Entity entity) {
+    private void applyActionOnceThereComponent(Entity entity) {
         ActionOrMoveToPosition am = amm.get(entity);
 
         switch (am.action) {
             case PICKUP:
-                entity.add(new TakeOnceClose());
+                entity.add(new ActionOnceClose(Takeing.class, 0.5f, false));
                 break;
             case FIRE:
-                entity.add(new FireInteractionOnceClose());
+                entity.add(new ActionOnceClose(FireInteract.class, 0.5f, true));
+                break;
+            case FISH:
+                entity.add(new ActionOnceClose(Fishing.class, 0.5f, false));
                 break;
         }
 
@@ -74,6 +77,9 @@ public class ActionOrMoveToSystem extends IteratingSystem {
                 break;
             case FIRE:
                 playerEntity.first().add(new FireInteract());
+                break;
+            case FISH:
+                entity.add(new Fishing());
                 break;
         }
     }

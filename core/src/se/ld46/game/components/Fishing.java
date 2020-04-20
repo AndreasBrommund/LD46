@@ -2,5 +2,5 @@ package se.ld46.game.components;
 
 import com.badlogic.ashley.core.Component;
 
-public class TakeOnceClose implements Component {
+public class Fishing implements Component {
 }

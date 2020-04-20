@@ -25,6 +25,8 @@ public final class AssetManagerWrapper {
     public static final String MIDDLE_FIRE = "fires/little.png";
     public static final String FULL_FIRE = "fires/full.png";
     public static final String NIGHT = "night.png";
+    public static final String FISH = "fisk.png";
+    public static final String FISH_POOL = "pool.png";
 
 
     private AssetManagerWrapper() {
@@ -50,6 +52,8 @@ public final class AssetManagerWrapper {
         assetManager.load(ROD, Texture.class);
         assetManager.load(ROD_TAKEN, Texture.class);
         assetManager.load(NIGHT, Texture.class);
+        assetManager.load(FISH, Texture.class);
+        assetManager.load(FISH_POOL, Texture.class);
 
 
         assetManager.finishLoading();
