@@ -14,6 +14,8 @@ public final class Config {
 
     public final static int TILE_SIZE = 16;
 
+    public final static int TIME_UNTIL_RESCUED = 60 * 5;
+
     public static boolean DEBUG = false;
 
     public static Game.GameState gameState = Game.GameState.RUN;

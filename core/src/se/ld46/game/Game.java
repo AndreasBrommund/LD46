@@ -1,6 +1,7 @@
 package se.ld46.game;
 
 import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -11,8 +12,10 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.math.Vector2;
 import se.ld46.game.collisionmap.CollisionMap;
+import se.ld46.game.components.Countdown;
 import se.ld46.game.components.Hunger;
 import se.ld46.game.components.ItemType;
+import se.ld46.game.components.Rescuabled;
 import se.ld46.game.entityfactories.*;
 import se.ld46.game.systems.*;
 import se.ld46.game.util.Config;
@@ -55,6 +58,7 @@ public class Game extends ApplicationAdapter {
                         1,
                         assetManagerWrapper().get(ROD),
                         assetManagerWrapper().get(ROD_TAKEN), ItemType.ROD))
+                .withEntity(new Entity().add(new Countdown(Config.TIME_UNTIL_RESCUED)).add(new Rescuabled()))
                 .withEntity(MousePointerFactory.create(47, 50))
                 .withEntity(FireFactory.create(50, 50, 1, 1, assetManagerWrapper().get(NO_FIRE)))
                 .withEntity(TiledMapFactory.create())
@@ -81,6 +85,8 @@ public class Game extends ApplicationAdapter {
                 .withEntitySystem(new MoveToInventorySystem(21))
                 .withEntitySystem(new RemovingSystem(Integer.MAX_VALUE))
                 .withEntitySystem(new NightRenderingSystem())
+                .withEntitySystem(new CountdownSystem())
+                .withEntitySystem(new WinSystem())
                 .build();
 
 
