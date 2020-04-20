@@ -57,6 +57,7 @@ public class ClickItemSystem extends EntitySystem implements TouchDownSubscriber
 
     private void decideOnAction(Entity entity, Position p) {
         ClickableItem clickableItem = clickableItemComponentMapper.get(entity);
+        Gdx.app.log("CLICK ITEM", "Clicked on:" + clickableItem.clickType);
         entity.add(new ActionOrMoveToPosition(clickableItem.clickType, p));
     }
 

@@ -11,7 +11,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.math.Vector2;
 import se.ld46.game.collisionmap.CollisionMap;
-import se.ld46.game.components.ClickType;
 import se.ld46.game.components.Hunger;
 import se.ld46.game.components.ItemType;
 import se.ld46.game.entityfactories.*;
@@ -37,14 +36,6 @@ public class Game extends ApplicationAdapter {
         TiledDebugMapRendered tiledDebugMapRendered = new TiledDebugMapRendered(3, worldCamera());
         engine = EngineBuilder
                 .engineBuilder()
-                .withEntity(ItemFactory.create(42,
-                        61,
-                        1,
-                        1,
-                        assetManagerWrapper().get(FISH_POOL),
-                        assetManagerWrapper().get(FISH),
-                        ItemType.FISH,
-                        ClickType.FISH))
                 .withEntity(OrcFactory.create(55, 50, 2, 2))
                 .withEntity(ItemFactory.create(46, 50, 1, 1, assetManagerWrapper().get(ITEM_WOOD), assetManagerWrapper().get(ITEM_WOOD_TAKEN), ItemType.WOOD))
                 .withEntity(ItemFactory.create(46, 48, 1, 1, assetManagerWrapper().get(ITEM_WOOD), assetManagerWrapper().get(ITEM_WOOD_TAKEN), ItemType.WOOD))
@@ -94,6 +85,7 @@ public class Game extends ApplicationAdapter {
                 .withEntitySystem(new MoveToInventorySystem(21))
                 .withEntitySystem(new RemovingSystem(Integer.MAX_VALUE))
                 .withEntitySystem(new NightRenderingSystem())
+                .withEntitySystem(new FishGeneratorSystem(5))
                 .withEntitySystem(new CountdownSystem())
                 .withEntitySystem(new WinSystem())
                 .withEntitySystem(new DialogSystem())

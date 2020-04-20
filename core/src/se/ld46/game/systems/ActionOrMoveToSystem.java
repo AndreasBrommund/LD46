@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import se.ld46.game.components.*;
 import se.ld46.game.pathfinding.Location;
@@ -35,8 +36,10 @@ public class ActionOrMoveToSystem extends IteratingSystem {
         Vector2 clickedItemPosition = new Vector2(am.p.x, am.p.y);
 
         if (playerPosition.dst(clickedItemPosition) <= ALLOWED_DISTANCE) {
+            Gdx.app.log("ActionOrMove", "Execute action");
             applyActionComponent(entity, am);
         } else {
+            Gdx.app.log("ActionOrMove", "Find path first then action");
             applyPathfindingComponent(entity);
             applyActionOnceThereComponent(entity);
         }
