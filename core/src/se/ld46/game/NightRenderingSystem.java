@@ -15,6 +15,7 @@ public class NightRenderingSystem extends EntitySystem {
     private float alpha = 0;
 
     public NightRenderingSystem() {
+        super(10); //TODO this should be exposed in the constructor instead...
         batch = new SpriteBatch();
         img = AssetManagerWrapper.assetManagerWrapper().get(AssetManagerWrapper.NIGHT);
     }
