@@ -70,7 +70,7 @@ public class Game extends ApplicationAdapter {
                 .withEntitySystem(new MoveToGoalSystem(0.05f))
                 .withEntitySystem(tiledDebugMapRendered)
                 .withEntitySystem(new UtilSystem(collisionMapRendered, tiledDebugMapRendered))
-                .withEntitySystem(new HudSystem(6))
+                .withEntitySystem(new HudSystem(12))
                 .withEntitySystem(new MousePointerSystem(10))
                 .withEntitySystem(new ActionOrMoveToSystem())
                 .withEntitySystem(new FireInteractionSystem(50))
@@ -85,7 +85,7 @@ public class Game extends ApplicationAdapter {
                 .withEntitySystem(new FishGeneratorSystem(2))
                 .withEntitySystem(new CountdownSystem())
                 .withEntitySystem(new WinSystem())
-                .withEntitySystem(new DialogSystem())
+                .withEntitySystem(new DialogSystem(12))
                 .build();
 
 

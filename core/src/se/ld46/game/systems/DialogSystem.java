@@ -16,8 +16,8 @@ public class DialogSystem extends IteratingSystem {
     private SpriteBatch batch;
     BitmapFont font;
 
-    public DialogSystem() {
-        super(Family.all(Dialog.class).get());
+    public DialogSystem(int prio) {
+        super(Family.all(Dialog.class).get(), prio);
         batch = new SpriteBatch();
         font = new BitmapFont();
     }
