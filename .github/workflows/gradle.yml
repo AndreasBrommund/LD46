@@ -42,16 +42,16 @@ jobs:
         with:
           name: HTML
           path: html/build/dist
-
-      - name: Upload with FTP
-        uses: sebastianpopp/ftp-action@releases/v2
-        with:
-          host: 'ftp.brommund.se'
-          user: 'brommund.se'
-          password: ${{ secrets.FTP_PASSWORD }}
-          localDir: 'html/build/dist'
-          remoteDir: '.'
-          forceSsl: 'false'
+  #
+  #      - name: Upload with FTP
+  #        uses: sebastianpopp/ftp-action@releases/v2
+  #        with:
+  #          host: 'ftp.brommund.se'
+  #          user: 'brommund.se'
+  #          password: ${{ secrets.FTP_PASSWORD }}
+  #          localDir: 'html/build/dist'
+  #          remoteDir: '.'
+  #          forceSsl: 'false'
 
   desktop:
     needs: test
