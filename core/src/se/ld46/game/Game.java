@@ -6,10 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
-import com.badlogic.gdx.math.Vector2;
 import se.ld46.game.collisionmap.CollisionMap;
 import se.ld46.game.components.Hunger;
 import se.ld46.game.components.ItemType;
@@ -17,7 +13,6 @@ import se.ld46.game.entityfactories.*;
 import se.ld46.game.systems.*;
 import se.ld46.game.util.Config;
 
-import java.util.ArrayList;
 import java.util.function.Consumer;
 
 import static se.ld46.game.input.GameInputProcessor.gameInputProcessor;
@@ -30,6 +25,8 @@ public class Game extends ApplicationAdapter {
 
     @Override
     public void create() {
+
+        CollisionMap.createCollisionMap();
 
 
         CollisionMapRendered collisionMapRendered = new CollisionMapRendered(1, worldCamera());
@@ -90,21 +87,6 @@ public class Game extends ApplicationAdapter {
                 .withEntitySystem(new WinSystem())
                 .withEntitySystem(new DialogSystem())
                 .build();
-
-
-        TiledMap t = assetManagerWrapper().get(BACKGROUND_TMX);
-        TiledMapTileLayer a = (TiledMapTileLayer) t.getLayers().get(0);
-
-
-        ArrayList<Vector2> blockedPositions = new ArrayList<>();
-        t.getLayers().get("Collisions").getObjects().getByType(TiledMapTileMapObject.class).forEach(r -> {
-            float x = (int) (r.getX() / Config.TILE_SIZE);
-            float y = (int) (Config.WORLD_HEIGHT - r.getY() / Config.TILE_SIZE);
-            blockedPositions.add(new Vector2(x, y));
-        });
-
-        CollisionMap.createCollisionMap(blockedPositions);
-        CollisionMap.data[49][49] = 1; //N.b THIS IS THE FIRES POSITON
 
 
         Gdx.input.setInputProcessor(gameInputProcessor());
